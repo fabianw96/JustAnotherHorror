@@ -41,14 +41,7 @@ namespace PlayerScripts
         {
             _inputVector = context.ReadValue<Vector2>();
         }
-    
-        public void OnJump(InputAction.CallbackContext context)
-        {
-            if (context.performed && IsGrounded())
-            {
-                HandleJump();
-            }
-        }
+        
         
         public void OnInteraction(InputAction.CallbackContext context)
         {
@@ -90,13 +83,6 @@ namespace PlayerScripts
 
             _rBody.AddForce(new Vector3(velocityChange.x, 0f, velocityChange.z), ForceMode.VelocityChange);
         
-        }
-
-        private void HandleJump()
-        {
-            float jumpHeight = Mathf.Sqrt(-2f * jumpForce *  Physics.gravity.y);
-            _rBody.AddForce(Vector3.up *  jumpHeight, ForceMode.Impulse);
-
         }
 
         private bool IsGrounded()

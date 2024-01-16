@@ -1,7 +1,12 @@
+using UnityEngine;
+
 namespace Interfaces
 {
     public interface IInteractable
     {
-        void Interaction();
+        void Interaction()
+        {
+            Debug.Log(this);
+        }
     }
 }

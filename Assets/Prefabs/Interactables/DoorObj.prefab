@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 7365195448214998952}
   - component: {fileID: 6845130475295638295}
   - component: {fileID: 2350953785536712496}
+  - component: {fileID: 2526926840094310650}
   m_Layer: 0
   m_Name: DoorInter
   m_TagString: Untagged
@@ -176,3 +177,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 2289786126245992976}
   key: {fileID: 0}
+--- !u!208 &2526926840094310650
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847556242933796156}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.4, y: 1, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.40000004, y: 1, z: 0.024866717}
+  m_TimeToStationary: 0.5

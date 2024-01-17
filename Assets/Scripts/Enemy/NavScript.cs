@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +9,8 @@ namespace Enemy
     {
         [SerializeField] private Transform player;
         [SerializeField] private LayerMask playerLayer;
+        [SerializeField] private List<Transform> waypoints;
+        [SerializeField] private float detectionRange = 5f;
 
         private NavMeshAgent agent;
         private NavMeshHit hit;
@@ -23,19 +26,30 @@ namespace Enemy
         {
             if (!agent.Raycast(player.position, out hit))
             {
-                agent.SetDestination(player.position);
+                if (hit.distance <= detectionRange)
+                {
+                    agent.speed = 3;
+                    agent.SetDestination(player.position);
+                    
+                }
+                else
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(StartPatrol(agent.destination));
+                }
             }
             else
             {
-                StartCoroutine(StartPatrol());
                 StopAllCoroutines();
+                StartCoroutine(StartPatrol(agent.destination));
             }
         }
 
-        IEnumerator StartPatrol()
+        IEnumerator StartPatrol(Vector3 lastDestination)
         {
+            agent.SetDestination(lastDestination);
             yield return new WaitForSeconds(5);
-            Debug.Log("returning to patrol!");
+            // Debug.Log("returning to patrol!");
         }
     
     }

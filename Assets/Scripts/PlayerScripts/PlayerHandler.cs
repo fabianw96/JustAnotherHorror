@@ -1,3 +1,7 @@
+using System;
+using Interactables;
+using Interfaces;
+using PlayerScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +12,8 @@ namespace PlayerScripts
     {
         private PlayerInteraction Interaction = new();
         private Rigidbody _rBody;
+
+        [SerializeField] private Material highlightMat;
     
         [Header("Movement")]
         private Vector2 _inputVector;
@@ -16,17 +22,12 @@ namespace PlayerScripts
         [SerializeField] private float speed = 5f;
         [SerializeField] private float maxForce;
         [SerializeField] private float sprintMulti = 2f;
-    
-        [Header("Ground Check")]
-        [SerializeField] private Transform groundCheck;
-        [SerializeField] private LayerMask groundLayer;
-        [SerializeField] private float groundCheckRadius;
-
 
         private void Awake()
         {
             _rBody = GetComponent<Rigidbody>();
         }
+
 
         // Update is called once per frame
         void FixedUpdate()
@@ -54,8 +55,6 @@ namespace PlayerScripts
             _isSprinting = context.performed;
         }
     
-
-    
         private void MoveCharacter()
         {
             //find target velocity
@@ -81,18 +80,6 @@ namespace PlayerScripts
             velocityChange = Vector3.ClampMagnitude(velocityChange, maxForce);
 
             _rBody.AddForce(new Vector3(velocityChange.x, 0f, velocityChange.z), ForceMode.VelocityChange);
-        
-        }
-
-        private bool IsGrounded()
-        {
-            return Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
 }

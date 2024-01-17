@@ -6,7 +6,7 @@ namespace PlayerScripts
     public class PlayerInteraction
     {
         private const float RaycastDistance = 5f;
-
+     
         public void Interact()
         {
             RaycastHit hitInfo = new RaycastHit();

@@ -7,6 +7,7 @@ namespace Managers
     public class GameManager : MonoBehaviour
     {
         private static GameManager _instance;
+        private List<GameObject> interactableList;
         
         private void Awake()
         {
@@ -21,5 +22,9 @@ namespace Managers
             DontDestroyOnLoad(this);
         }
 
+        private void Start()
+        {
+            
+        }
     }
 }

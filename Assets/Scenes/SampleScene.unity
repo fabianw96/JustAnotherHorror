@@ -7162,6 +7162,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6344501581154689407, guid: 55c5198670a6be84a9c8f416a45f1307,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344501581154689407, guid: 55c5198670a6be84a9c8f416a45f1307,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 151c5a5238ef5524982608e41ef69755, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -64045,14 +64055,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea914e0bdacf1c428aa31a5046b328e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlightMat: {fileID: 2100000, guid: 1d8d638da17efc64b8bb7c08987922f5, type: 2}
   speed: 3
   maxForce: 1
   sprintMulti: 2
-  groundCheck: {fileID: 5877380262888778095}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  groundCheckRadius: 0.5
 --- !u!1001 &1025317243887983629
 PrefabInstance:
   m_ObjectHideFlags: 0

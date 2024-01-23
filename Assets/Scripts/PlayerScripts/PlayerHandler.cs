@@ -12,8 +12,6 @@ namespace PlayerScripts
     {
         private PlayerInteraction Interaction = new();
         private Rigidbody _rBody;
-
-        [SerializeField] private Material highlightMat;
     
         [Header("Movement")]
         private Vector2 _inputVector;

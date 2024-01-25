@@ -13,6 +13,7 @@ namespace Enemy
     {
         [Header("Transforms")]
         [SerializeField] private Transform player;
+        [SerializeField] private LayerMask playerLayer;
         [SerializeField] private List<Transform> waypoints;
         private Transform currentDest;
         
@@ -41,6 +42,7 @@ namespace Enemy
         private float chaseTime;
         private Vector3 dest;
         private float agentDistance;
+        private float distanceToPlayer;
         
 
         private readonly int speedHash = Animator.StringToHash("Speed");
@@ -56,15 +58,19 @@ namespace Enemy
         // Update is called once per frame
         void Update()
         {
+            distanceToPlayer = Vector3.Distance(player.position, transform.position);
             EnemyAnimationState();
-            if (agent.Raycast(player.position, out hit)) return;
-            if (hit.distance <= detectionRange)
+            
+            if (distanceToPlayer <= detectionRange)
             {
-                patrolling = false;
-                StopCoroutine(nameof(StayIdle));
-                StopCoroutine(nameof(ChaseRoutine));
-                StartCoroutine(nameof(ChaseRoutine));
-                chasing = true;
+                if (!agent.Raycast(player.position, out hit))
+                {
+                    patrolling = false;
+                    StopCoroutine(nameof(StayIdle));
+                    StopCoroutine(nameof(ChaseRoutine));
+                    StartCoroutine(nameof(ChaseRoutine));
+                    chasing = true;
+                }
             }
 
             if (chasing == true)
@@ -82,17 +88,15 @@ namespace Enemy
 
             if (patrolling == true)
             {
-                
                 dest = currentDest.position;
                 agent.destination = dest;
                 agent.speed = patrolSpeed;
-                agentDistance = agent.remainingDistance;
-                // Debug.Log($"{agent.remainingDistance} ---- {agent.stoppingDistance}");
-                if (agent.remainingDistance <= agent.stoppingDistance)
+                agentDistance = Vector3.Distance(dest, transform.position);
+                if (agent.remainingDistance <= 1f) 
                 {
                     patrolling = false;
                     agent.speed = 0;
-                    // StopCoroutine(nameof(StayIdle));
+                    StopCoroutine(nameof(StayIdle));
                     StartCoroutine(nameof(StayIdle));
                 }
             }

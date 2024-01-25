@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,10 +21,10 @@ namespace Enemy
         [Header("Range and Time")]
         [SerializeField] private float detectionRange = 5f;
         [SerializeField] private float catchDistance = 1f;
-        [SerializeField][Range(1f, 10f)] private float minIdleTime;
-        [SerializeField][Range(1f, 10f)] private float maxIdleTime;
-        [SerializeField][Range(1f, 10f)] private float minChaseTime;
-        [SerializeField][Range(1f, 10f)] private float maxChaseTime;
+        [SerializeField][Range(1f, 15f)] private float minIdleTime;
+        [SerializeField][Range(1f, 15f)] private float maxIdleTime;
+        [SerializeField][Range(1f, 5f)] private float minChaseTime;
+        [SerializeField][Range(1f, 5f)] private float maxChaseTime;
         
 
         [Header("Speed")] 
@@ -41,7 +42,6 @@ namespace Enemy
         private float idleTime;
         private float chaseTime;
         private Vector3 dest;
-        private float agentDistance;
         private float distanceToPlayer;
         
 
@@ -73,7 +73,7 @@ namespace Enemy
                 }
             }
 
-            if (chasing == true)
+            if (chasing)
             {
                 dest = player.position;
                 agent.destination = dest;
@@ -81,17 +81,16 @@ namespace Enemy
                 float distance = Vector3.Distance(dest, agent.transform.position);
                 if (distance <= catchDistance)
                 {
-                    Debug.Log("You dead");
+                    GameManager.Instance.GameOver(true);
                     // chasing = false;
                 }
             }
 
-            if (patrolling == true)
+            if (patrolling)
             {
                 dest = currentDest.position;
                 agent.destination = dest;
                 agent.speed = patrolSpeed;
-                agentDistance = Vector3.Distance(dest, transform.position);
                 if (agent.remainingDistance <= 1f) 
                 {
                     patrolling = false;

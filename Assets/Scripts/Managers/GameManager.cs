@@ -6,25 +6,41 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
-        private static GameManager _instance;
+        public static GameManager Instance;
         private List<GameObject> interactableList;
+        private bool _isGameOver;
         
         private void Awake()
         {
-            if (_instance != null && _instance != this)    
+            if (Instance != null && Instance != this)    
             {
                 Destroy(this);
             }
             else
             {
-                _instance = this;
+                Instance = this;
             }
             DontDestroyOnLoad(this);
         }
 
-        private void Start()
+
+        private void Update()
         {
-            
+            if (_isGameOver)
+            {
+                
+            }
         }
+
+        public void GameOver(bool state)
+        {
+            _isGameOver = state;
+        }
+
+        public bool IsGameOver()
+        {
+            return _isGameOver;
+        }
+        
     }
 }

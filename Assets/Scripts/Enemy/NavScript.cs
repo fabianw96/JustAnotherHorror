@@ -81,8 +81,8 @@ namespace Enemy
                 float distance = Vector3.Distance(dest, agent.transform.position);
                 if (distance <= catchDistance)
                 {
-                    GameManager.Instance.GameOver(true);
-                    // chasing = false;
+                    chasing = false;
+                    SceneLoader.Load(SceneLoader.Scenes.GameOver);
                 }
             }
 

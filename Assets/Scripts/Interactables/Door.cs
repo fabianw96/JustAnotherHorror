@@ -22,5 +22,7 @@ namespace Interactables
             _isOpen = !_isOpen;
             animator.SetBool(_isOpenHash, _isOpen);
         }
+        
+        
     }
 }

@@ -5,6 +5,7 @@ using Managers;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -82,7 +83,7 @@ namespace Enemy
                 if (distance <= catchDistance)
                 {
                     chasing = false;
-                    SceneLoader.Load(SceneLoader.Scenes.GameOver);
+                    SceneLoader.Load(SceneLoader.Scenes.GameOver, LoadSceneMode.Single);
                 }
             }
 

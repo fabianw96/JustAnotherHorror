@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Interfaces;
 using Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 namespace Interactables
 {
@@ -22,7 +20,5 @@ namespace Interactables
             _isOpen = !_isOpen;
             animator.SetBool(_isOpenHash, _isOpen);
         }
-        
-        
     }
 }

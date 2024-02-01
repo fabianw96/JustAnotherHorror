@@ -23,7 +23,7 @@ namespace UI_Toolkit.Panels
         {
             Debug.Log("Test!");
             GameManager.Instance.GameOver(false);
-            SceneLoader.Load(SceneLoader.Scenes.SampleScene);
+            SceneLoader.Load(SceneLoader.Scenes.SampleScene, LoadSceneMode.Single);
         }
     }
 }

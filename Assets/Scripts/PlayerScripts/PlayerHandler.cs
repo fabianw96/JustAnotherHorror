@@ -37,7 +37,7 @@ namespace PlayerScripts
 
         private void Update()
         {
-            // HighlightInteraction();
+            HighlightInteraction();
         }
 
         // Update is called once per frame
@@ -45,25 +45,18 @@ namespace PlayerScripts
         {
             MoveCharacter();
         }
-
-
-        // private void HighlightInteraction()
-        // {
-        //     interactHud.SetActive(false);
-        //     if (myCamera != null)
-        //         Physics.Raycast(myCamera.ScreenPointToRay(Input.mousePosition), out _raycastHit, PlayerInteraction.RaycastDistance);
-        //     if (_raycastHit.transform.gameObject.GetComponent<IInteractable>() != null)
-        //     {
-        //         interactHud.SetActive(true);
-        //     }
-        // }
+        
+        private void HighlightInteraction()
+        {
+            if (myCamera == null || !Physics.Raycast(myCamera.ScreenPointToRay(Input.mousePosition), out _raycastHit, PlayerInteraction.RaycastDistance)) return;
+            interactHud.SetActive(_raycastHit.transform.gameObject.GetComponent<IInteractable>() != null);
+        }
     
     
         public void OnMove(InputAction.CallbackContext context)
         {
             _inputVector = context.ReadValue<Vector2>();
         }
-        
         
         public void OnInteraction(InputAction.CallbackContext context)
         {

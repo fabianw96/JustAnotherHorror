@@ -3,24 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using Managers;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
 public class SettingsMenu : MonoBehaviour
 {
+    [SerializeField] private AudioMixer audioMixer;
     private DropdownField _displayResolution;
     private DropdownField _quality;
+    private Slider _volumeSlider;
 
     private VisualElement root;
     private void Awake()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
 
-        root.Q<Button>("Save").clicked += () => OnApply();
-        root.Q<Button>("Cancel").clicked += () => SceneLoader.Unload(SceneLoader.Scenes.SettingsMenu);
+        root.Q<Button>("Save").clicked += OnApply;
+        root.Q<Button>("Cancel").clicked += OnCancel;
         InitDisplayResolution();
         InitQualitySettings();
+        InitVolume();
     }
 
     private void OnApply()
@@ -28,7 +33,20 @@ public class SettingsMenu : MonoBehaviour
         var resolution = Screen.resolutions[_displayResolution.index];
         Screen.SetResolution(resolution.width, resolution.height, true);
         QualitySettings.SetQualityLevel(_quality.index, true);
+        audioMixer.SetFloat("Volume", Mathf.Log10(_volumeSlider.value) * 20);
+        SceneLoader.Load(SceneLoader.Scenes.PauseMenu, LoadSceneMode.Additive);
         SceneLoader.Unload(SceneLoader.Scenes.SettingsMenu);
+    }
+
+    private void OnCancel()
+    {
+        SceneLoader.Load(SceneLoader.Scenes.PauseMenu, LoadSceneMode.Additive);
+        SceneLoader.Unload(SceneLoader.Scenes.SettingsMenu);
+    }
+
+    private void InitVolume()
+    {
+        _volumeSlider = root.Q<Slider>("Volume");
     }
 
     private void InitQualitySettings()

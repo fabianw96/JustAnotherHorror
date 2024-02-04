@@ -6,7 +6,7 @@
             <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" class="label-main-title" style="margin-top: 28px; margin-right: 28px; margin-bottom: 28px; margin-left: 28px;" />
             <ui:DropdownField label="Resolution" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="Resolution" class="label-main-title" style="color: rgb(255, 255, 255); font-size: 14px; -unity-font-style: bold; justify-content: space-around; align-self: stretch;" />
             <ui:DropdownField label="Quality" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="Quality" class="label-main-title" style="align-self: stretch; font-size: 14px;" />
-            <ui:Slider picking-mode="Ignore" label="Slider" value="50" high-value="100" low-value="0.001" class="label-main-title" style="align-self: stretch; font-size: 14px;" />
+            <ui:Slider picking-mode="Ignore" label="Volume" value="1" high-value="1" low-value="0.0001" name="Volume" show-input-field="false" class="label-main-title" style="align-self: stretch; font-size: 14px;" />
             <ui:Button text="Save" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Save" class="button-main-title" style="white-space: nowrap; -unity-text-align: middle-center; width: -49px;" />
             <ui:Button text="Cancel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Cancel" class="button-main-title" />
         </ui:VisualElement>

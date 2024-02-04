@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -12,8 +12,8 @@ namespace Managers
         private List<GameObject> interactableList;
         private bool _isGameOver;
         public bool isPaused;
-        private GameObject pScreen;
-        private GameObject goScreen;
+        // private GameObject pScreen;
+        // private GameObject goScreen;
         
         private void Awake()
         {
@@ -39,13 +39,11 @@ namespace Managers
             isPaused = !isPaused;
             if (isPaused)
             {
-                pScreen = Instantiate(pauseScreen);
-                pScreen.SetActive(true);
+                SceneLoader.Load(SceneLoader.Scenes.PauseMenu, LoadSceneMode.Additive);
             }
             else if (!isPaused)
             {
-                pScreen.SetActive(false);
-                Destroy(pScreen);
+                SceneLoader.Unload(SceneLoader.Scenes.PauseMenu);
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }

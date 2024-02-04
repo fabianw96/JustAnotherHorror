@@ -16,8 +16,13 @@ public class PauseScreen : MonoBehaviour
         
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         root.Q<Button>("Return").clicked += () => GameManager.Instance.PauseGame();
-        root.Q<Button>("Settings").clicked +=
-            () => SceneLoader.Load(SceneLoader.Scenes.SettingsMenu, LoadSceneMode.Additive);
+        root.Q<Button>("Settings").clicked += OpenSettings;
         root.Q<Button>("Quit").clicked += () => Application.Quit();
+    }
+
+    private void OpenSettings()
+    {
+        SceneLoader.Load(SceneLoader.Scenes.SettingsMenu, LoadSceneMode.Additive);
+        SceneLoader.Unload(SceneLoader.Scenes.PauseMenu);
     }
 }

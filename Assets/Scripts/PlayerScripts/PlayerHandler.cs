@@ -73,7 +73,7 @@ namespace PlayerScripts
 
         public void OnEscape(InputAction.CallbackContext context)
         {
-            if (!GameManager.Instance.IsGameOver())
+            if (!GameManager.Instance.IsGameOver() && context.performed)
             {
                 GameManager.Instance.PauseGame();
             }

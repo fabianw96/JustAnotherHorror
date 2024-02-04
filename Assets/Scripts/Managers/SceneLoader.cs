@@ -10,6 +10,7 @@ public static class SceneLoader
         MainMenu,
         SampleScene,
         GameOver,
+        PauseMenu,
         SettingsMenu,
     }
     

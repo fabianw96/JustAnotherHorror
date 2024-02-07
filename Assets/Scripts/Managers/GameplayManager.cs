@@ -6,20 +6,17 @@ namespace Managers
 {
     public class GameplayManager : MonoBehaviour
     {
-        public static GameplayManager instance;
-
+        public static GameplayManager Instance;
         public List<Key> collectedKeys;
         
         private void Awake()
         {
-            if (instance != null && instance != this)    
+            if (Instance != null && Instance != this)    
             {
                 Destroy(this);
+                return;
             }
-            else
-            {
-                instance = this;
-            }
+            Instance = this;
             DontDestroyOnLoad(this);
         }
 
@@ -27,7 +24,5 @@ namespace Managers
         {
             collectedKeys.Add(key);
         }
-
-
     }
 }

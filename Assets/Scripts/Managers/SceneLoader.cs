@@ -14,9 +14,9 @@ public static class SceneLoader
         SettingsMenu,
     }
     
-    public static void Load(Scenes scene, LoadSceneMode mode)
+    public static void Load(Scenes scenes, LoadSceneMode mode)
     {
-        SceneManager.LoadScene(scene.ToString(), mode);
+        SceneManager.LoadScene(scenes.ToString(), mode);
     }
 
     public static void Unload(Scenes scenes)

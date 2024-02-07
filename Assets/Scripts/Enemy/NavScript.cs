@@ -64,12 +64,13 @@ namespace Enemy
             
             if (distanceToPlayer <= detectionRange)
             {
+                //punktprodukt mathf.dot
                 if (!agent.Raycast(player.position, out hit))
                 {
                     patrolling = false;
-                    StopCoroutine(nameof(StayIdle));
-                    StopCoroutine(nameof(ChaseRoutine));
-                    StartCoroutine(nameof(ChaseRoutine));
+                    StopCoroutine(StayIdle());
+                    StopCoroutine(ChaseRoutine());
+                    StartCoroutine(ChaseRoutine());
                     chasing = true;
                 }
             }
@@ -96,8 +97,8 @@ namespace Enemy
                 {
                     patrolling = false;
                     agent.speed = 0;
-                    StopCoroutine(nameof(StayIdle));
-                    StartCoroutine(nameof(StayIdle));
+                    StopCoroutine(StayIdle());
+                    StartCoroutine(StayIdle());
                 }
             }
         }

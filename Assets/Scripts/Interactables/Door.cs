@@ -16,7 +16,7 @@ namespace Interactables
         public void Interaction()
         {
             Debug.Log("Interacted with: " + gameObject);
-            if (!GameplayManager.instance.collectedKeys.Contains(key)) return;
+            if (!GameplayManager.Instance.collectedKeys.Contains(key)) return;
             _isOpen = !_isOpen;
             animator.SetBool(_isOpenHash, _isOpen);
         }

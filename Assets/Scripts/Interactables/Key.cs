@@ -9,7 +9,7 @@ namespace Interactables
         [SerializeField] private int keyIdentifier;
         public void Interaction()
         {
-            GameplayManager.instance.AddKeyToList(this);
+            GameplayManager.Instance.AddKeyToList(this);
             gameObject.SetActive(false);
         }
     }

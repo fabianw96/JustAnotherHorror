@@ -15,9 +15,9 @@ public class SettingsMenu : MonoBehaviour
     private DropdownField _displayResolution;
     private DropdownField _quality;
     private Slider _volumeSlider;
-
     private VisualElement root;
-    private void Awake()
+    
+    private void OnEnable()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -27,6 +27,7 @@ public class SettingsMenu : MonoBehaviour
         InitQualitySettings();
         InitVolume();
     }
+    
 
     private void OnApply()
     {
@@ -34,14 +35,12 @@ public class SettingsMenu : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, true);
         QualitySettings.SetQualityLevel(_quality.index, true);
         audioMixer.SetFloat("Volume", Mathf.Log10(_volumeSlider.value) * 20);
-        SceneLoader.Load(SceneLoader.Scenes.PauseMenu, LoadSceneMode.Additive);
-        SceneLoader.Unload(SceneLoader.Scenes.SettingsMenu);
+        GameManager.Instance.SwitchMenu();
     }
 
     private void OnCancel()
     {
-        SceneLoader.Load(SceneLoader.Scenes.PauseMenu, LoadSceneMode.Additive);
-        SceneLoader.Unload(SceneLoader.Scenes.SettingsMenu);
+        GameManager.Instance.SwitchMenu();
     }
 
     private void InitVolume()

@@ -5332,8 +5332,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fac7db3034194e4baadc18487d948ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseScreen: {fileID: 3911800059784199681, guid: f0f2dea212b010643b0c0589b1f5abf6,
+  pausePrefab: {fileID: 741313941004482970, guid: f0f2dea212b010643b0c0589b1f5abf6,
     type: 3}
+  settingsPrefab: {fileID: 212873439324820764, guid: b40356465fee95d47946a79a46c67cfb,
+    type: 3}
+  mainMenuPrefab: {fileID: 0}
   isPaused: 0
 --- !u!4 &221718385
 Transform:
@@ -59997,7 +60000,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1939435372
 Transform:
   m_ObjectHideFlags: 0
@@ -65769,6 +65772,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Note
+      objectReference: {fileID: 0}
+    - target: {fileID: 9205090164825444085, guid: 0a11e0d1f87123b49b7efa5d19366465,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

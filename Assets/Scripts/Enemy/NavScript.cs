@@ -14,7 +14,7 @@ namespace Enemy
     public class NavScript : MonoBehaviour
     {
         [Header("Transforms")]
-        [SerializeField] private Transform player;
+        [SerializeField] private GameObject player;
         [SerializeField] private LayerMask playerLayer;
         [SerializeField] private List<Transform> waypoints;
         private Transform currentDest;
@@ -59,13 +59,13 @@ namespace Enemy
         // Update is called once per frame
         void Update()
         {
-            distanceToPlayer = Vector3.Distance(player.position, transform.position);
+            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             EnemyAnimationState();
             
             if (distanceToPlayer <= detectionRange)
             {
                 //punktprodukt mathf.dot
-                if (!agent.Raycast(player.position, out hit))
+                if (!agent.Raycast(player.transform.position, out hit))
                 {
                     patrolling = false;
                     StopCoroutine(StayIdle());
@@ -77,14 +77,14 @@ namespace Enemy
 
             if (chasing)
             {
-                dest = player.position;
+                dest = player.transform.position;
                 agent.destination = dest;
                 agent.speed = chaseSpeed;
                 float distance = Vector3.Distance(dest, agent.transform.position);
-                if (distance <= catchDistance)
+                if (distance <= catchDistance && player.layer == playerLayer)
                 {
                     chasing = false;
-                    SceneLoader.Load(SceneLoader.Scenes.GameOver, LoadSceneMode.Single);
+                    GameManager.Instance.GameOver(true);
                 }
             }
 

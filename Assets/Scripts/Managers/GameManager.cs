@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScriptableObjects.Events;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,14 +11,15 @@ namespace Managers
         [SerializeField] private GameObject pausePrefab;
         [SerializeField] private GameObject settingsPrefab;
         [SerializeField] private GameObject mainMenuPrefab;
+        [SerializeField] private ScriptableEvent playerDeathEvent;
 
         public static GameManager Instance;
         private List<GameObject> interactableList;
         private bool _isGameOver;
         public bool isPaused;
-        [NonSerialized] public GameObject pScreen;
-        [NonSerialized] public GameObject sScreen;
-        [NonSerialized] public GameObject mScreen;
+        private GameObject pScreen;
+        private GameObject sScreen;
+        private GameObject mScreen;
         
         
         private void Awake()
@@ -60,6 +62,11 @@ namespace Managers
         public void GameOver(bool state)
         {
             _isGameOver = state;
+
+            if (_isGameOver)
+            {
+                playerDeathEvent.RaiseEvent();
+            }
         }
 
         public void PauseGame()

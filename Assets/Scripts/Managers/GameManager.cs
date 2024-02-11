@@ -69,20 +69,24 @@ namespace Managers
             }
         }
 
-        public void PauseGame()
+        public void PauseGame(bool pressedEscape)
         {
             isPaused = !isPaused;
-            if (isPaused)
+            switch (isPaused)
             {
-                pScreen.SetActive(true);
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = true;
-            }
-            else if (!isPaused)
-            {
-                pScreen.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                case true:
+                    if (pressedEscape)
+                    {
+                        pScreen.SetActive(true);
+                        Cursor.lockState = CursorLockMode.Confined;
+                        Cursor.visible = true;
+                    }
+                    break;
+                case false:
+                    pScreen.SetActive(false);
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    break;
             }
             Time.timeScale = isPaused ? 0 : 1;
         }

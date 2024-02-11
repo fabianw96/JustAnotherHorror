@@ -75,7 +75,7 @@ namespace PlayerScripts
         {
             if (!GameManager.Instance.IsGameOver() && context.performed)
             {
-                GameManager.Instance.PauseGame();
+                GameManager.Instance.PauseGame(true);
             }
         }
     

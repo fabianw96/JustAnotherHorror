@@ -1,6 +1,7 @@
 using System;
 using Interfaces;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Interactables
 {
@@ -11,11 +12,16 @@ namespace Interactables
         [SerializeField] private GameObject player;
         [SerializeField] private Transform hideTransform;
         [SerializeField] private GameObject lockerParent;
-        [SerializeField] private LayerMask hiddenLayer;
-        [SerializeField] private LayerMask playerLayer;
-        private Transform _lastPlayerPosition;
+        private LayerMask _hiddenLayer;
+        private LayerMask _playerLayer;
         private bool _isPlayerHidden = false;
 
+        private void Awake()
+        {
+            _hiddenLayer = LayerMask.NameToLayer("PlayerHidden");
+            _playerLayer = LayerMask.NameToLayer("Player");
+        }
+        
         public void Interaction()
         {
             if (!_isPlayerHidden)
@@ -30,10 +36,9 @@ namespace Interactables
 
         private void HidePlayer()
         {
-            // _lastPlayerPosition = player.transform;
             Camera.main.transform.SetParent(hideTransform);
             Camera.main.transform.localPosition = Vector3.zero;
-            player.layer = hiddenLayer;
+            player.layer = _hiddenLayer;
             _isPlayerHidden = true;
         }
 
@@ -42,7 +47,7 @@ namespace Interactables
             player.SetActive(true);
             Camera.main.transform.SetParent(player.transform);
             Camera.main.transform.localPosition = new Vector3(0, 0.5f, 0);
-            player.layer = playerLayer;
+            player.layer = _playerLayer;
             _isPlayerHidden = false;
         }
     }

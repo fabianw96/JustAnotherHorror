@@ -8,7 +8,6 @@ using UnityEngine.Events;
 public class ScriptableEventListener : MonoBehaviour
 {
     [SerializeField] private ScriptableEvent scriptableEvent;
-
     [SerializeField] private UnityEvent eventResponse;
 
     private void Awake()

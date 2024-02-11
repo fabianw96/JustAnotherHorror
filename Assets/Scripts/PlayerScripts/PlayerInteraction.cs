@@ -6,7 +6,7 @@ namespace PlayerScripts
     public static class PlayerInteraction
     {
         private static RaycastHit _raycastHit;
-        public static readonly float RaycastDistance = 5f;
+        public static readonly float RaycastDistance = 1.5f;
 
         
         public static void Interact()

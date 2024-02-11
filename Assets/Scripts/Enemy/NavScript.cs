@@ -15,7 +15,7 @@ namespace Enemy
     {
         [Header("Transforms")]
         [SerializeField] private GameObject player;
-        [SerializeField] private LayerMask playerLayer;
+        private LayerMask _playerLayer;
         [SerializeField] private List<Transform> waypoints;
         private Transform currentDest;
         
@@ -50,6 +50,7 @@ namespace Enemy
 
         private void Awake()
         {
+            _playerLayer = LayerMask.NameToLayer("Player");
             patrolling = true;
             rndNum = Random.Range(0, waypoints.Count);
             currentDest = waypoints[rndNum];
@@ -62,7 +63,7 @@ namespace Enemy
             distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             EnemyAnimationState();
             
-            if (distanceToPlayer <= detectionRange)
+            if (distanceToPlayer <= detectionRange && player.layer == _playerLayer)
             {
                 //punktprodukt mathf.dot
                 if (!agent.Raycast(player.transform.position, out hit))
@@ -81,7 +82,7 @@ namespace Enemy
                 agent.destination = dest;
                 agent.speed = chaseSpeed;
                 float distance = Vector3.Distance(dest, agent.transform.position);
-                if (distance <= catchDistance && player.layer == playerLayer)
+                if (distance <= catchDistance && player.layer == _playerLayer)
                 {
                     chasing = false;
                     GameManager.Instance.GameOver(true);

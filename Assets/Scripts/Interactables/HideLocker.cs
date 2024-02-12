@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,7 +12,8 @@ namespace Interactables
         //when interaction is called from hidden state, move camera back in front of locker.
         [SerializeField] private GameObject player;
         [SerializeField] private Transform hideTransform;
-        [SerializeField] private GameObject lockerParent;
+        [SerializeField] private List<AudioClip> clipList;
+        [SerializeField] private AudioSource audioSource;
         private LayerMask _hiddenLayer;
         private LayerMask _playerLayer;
         private bool _isPlayerHidden = false;
@@ -36,6 +38,7 @@ namespace Interactables
 
         private void HidePlayer()
         {
+            audioSource.PlayOneShot(clipList[0]);
             Camera.main.transform.SetParent(hideTransform);
             Camera.main.transform.localPosition = Vector3.zero;
             player.layer = _hiddenLayer;
@@ -44,7 +47,7 @@ namespace Interactables
 
         private void UnhidePlayer()
         {
-            player.SetActive(true);
+            audioSource.PlayOneShot(clipList[1]);
             Camera.main.transform.SetParent(player.transform);
             Camera.main.transform.localPosition = new Vector3(0, 0.5f, 0);
             player.layer = _playerLayer;

@@ -35,6 +35,9 @@ namespace Enemy
         [Header("Components")]
         [SerializeField] private Animator animator;
         [SerializeField] private NavMeshAgent agent;
+
+        [Header("Animations")] 
+        private AnimationEvent _animationEvent;
         
         private NavMeshHit hit;
         private int rndNum;
@@ -54,7 +57,7 @@ namespace Enemy
             patrolling = true;
             rndNum = Random.Range(0, waypoints.Count);
             currentDest = waypoints[rndNum];
-            Debug.Log(rndNum);
+            Debug.Log(rndNum);  
         }
 
         // Update is called once per frame

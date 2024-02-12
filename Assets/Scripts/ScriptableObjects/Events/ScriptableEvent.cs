@@ -22,9 +22,9 @@ namespace ScriptableObjects.Events
 
         public void RaiseEvent()
         {
-            foreach (var t in listenerList)
+            foreach (var listener in listenerList)
             {
-                t.OnEventRaised();
+                listener.OnEventRaised();
             }
         }
     }

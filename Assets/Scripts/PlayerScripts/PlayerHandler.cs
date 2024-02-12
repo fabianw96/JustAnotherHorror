@@ -48,7 +48,12 @@ namespace PlayerScripts
         
         private void HighlightInteraction()
         {
-            if (myCamera == null || !Physics.Raycast(myCamera.ScreenPointToRay(Input.mousePosition), out _raycastHit, PlayerInteraction.RaycastDistance)) return;
+            if (myCamera == null || !Physics.Raycast(myCamera.ScreenPointToRay(Input.mousePosition), out _raycastHit,
+                    PlayerInteraction.RaycastDistance))
+            {
+                interactHud.SetActive(false);
+                return;
+            }
             interactHud.SetActive(_raycastHit.transform.gameObject.GetComponent<IInteractable>() != null);
         }
     

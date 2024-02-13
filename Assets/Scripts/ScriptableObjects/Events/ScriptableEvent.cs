@@ -6,23 +6,23 @@ namespace ScriptableObjects.Events
     [CreateAssetMenu(menuName = "ScriptableObjects/ScriptableEvent")]
     public class ScriptableEvent : ScriptableObject, ISerializationCallbackReceiver
     {
-        private List<ScriptableEventListener> listenerList = new();
+        private List<ScriptableEventListener> _listenerList = new();
 
         public void Register(ScriptableEventListener listener)
         {
-            listenerList.Add(listener);
+            _listenerList.Add(listener);
         }
 
         public void UnRegister(ScriptableEventListener listener)
         {
-            if (listenerList.Count <= 0) return;
+            if (_listenerList.Count <= 0) return;
 
-            listenerList.Remove(listener);
+            _listenerList.Remove(listener);
         }
 
         public void RaiseEvent()
         {
-            foreach (var listener in listenerList)
+            foreach (var listener in _listenerList)
             {
                 listener.OnEventRaised();
             }
@@ -35,7 +35,7 @@ namespace ScriptableObjects.Events
 
         public void OnAfterDeserialize()
         {
-            listenerList.Clear();
+            _listenerList.Clear();
         }
     }
 }

@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Interfaces;
 using Managers;
-using ScriptableObjects.Events;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,22 +11,23 @@ namespace Interactables
     {
         private bool _isOpen;
         private bool _isUnlocked;
-        [SerializeField]private Animator animator;
+        private int _clipIndex;
         private readonly int _isOpenHash = Animator.StringToHash("isOpen");
+        
+        [SerializeField]private Animator animator;
         [SerializeField] private Key key;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private List<AudioClip> lockedDoorList;
-        private int clipIndex;
         [SerializeField] private AudioClip unlockDoor;
-        [SerializeField] private bool isFinalDoor = false;
+        [SerializeField] private bool isFinalDoor;
         
         public void Interaction()
         {
-            clipIndex = Random.Range(0, lockedDoorList.Count);
+            _clipIndex = Random.Range(0, lockedDoorList.Count);
             Debug.Log("Interacted with: " + gameObject);
             if (!GameplayManager.Instance.collectedKeys.Contains(key))
             {
-                audioSource.clip = lockedDoorList[clipIndex];
+                audioSource.clip = lockedDoorList[_clipIndex];
                 audioSource.Play();
                 return;
             }

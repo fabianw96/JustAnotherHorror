@@ -8,15 +8,17 @@ namespace Interactables
 {
     public class HideLocker : MonoBehaviour, IInteractable
     {
+        private LayerMask _hiddenLayer;
+        private LayerMask _playerLayer;
+        private bool _isPlayerHidden = false;
+        
         //When interaction is called from non-hidden state, lerp player camera to hidden position and disable collider.
         //when interaction is called from hidden state, move camera back in front of locker.
         [SerializeField] private GameObject player;
         [SerializeField] private Transform hideTransform;
         [SerializeField] private List<AudioClip> clipList;
         [SerializeField] private AudioSource audioSource;
-        private LayerMask _hiddenLayer;
-        private LayerMask _playerLayer;
-        private bool _isPlayerHidden = false;
+
 
         private void Awake()
         {

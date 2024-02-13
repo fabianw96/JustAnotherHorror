@@ -1,8 +1,5 @@
-using System;
-using Interactables;
 using Interfaces;
 using Managers;
-using PlayerScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,11 +20,11 @@ namespace PlayerScripts
         [SerializeField] private float speed = 5f;
         [SerializeField] private float maxForce;
         [SerializeField] private float sprintMulti = 2f;
-        private Camera myCamera;
+        private Camera _myCamera;
 
         private void Start()
         {
-            myCamera = Camera.main;
+            _myCamera = Camera.main;
         }
 
         private void Awake()
@@ -48,7 +45,7 @@ namespace PlayerScripts
         
         private void HighlightInteraction()
         {
-            if (myCamera == null || !Physics.Raycast(myCamera.ScreenPointToRay(Input.mousePosition), out _raycastHit,
+            if (_myCamera == null || !Physics.Raycast(_myCamera.ScreenPointToRay(Input.mousePosition), out _raycastHit,
                     PlayerInteraction.RaycastDistance))
             {
                 interactHud.SetActive(false);

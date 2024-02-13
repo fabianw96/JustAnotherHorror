@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using ScriptableObjects.Events;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,12 +11,12 @@ namespace Managers
         [SerializeField] private GameObject mainMenuPrefab;
 
         public static GameManager Instance;
-        private List<GameObject> interactableList;
+        private List<GameObject> _interactableList;
         private bool _isGameOver;
         public bool isPaused;
-        private GameObject pScreen;
-        private GameObject sScreen;
-        private GameObject mScreen;
+        private GameObject _pScreen;
+        private GameObject _sScreen;
+        private GameObject _mScreen;
         
         
         private void Awake()
@@ -41,19 +39,19 @@ namespace Managers
             //only load Main menu and settings when actually in main menu
             if (scene.name == SceneManager.GetSceneByBuildIndex(0).name)
             {
-                mScreen = Instantiate(mainMenuPrefab);
-                mScreen.SetActive(true);
-                sScreen = Instantiate(settingsPrefab);
-                sScreen.SetActive(false);
+                _mScreen = Instantiate(mainMenuPrefab);
+                _mScreen.SetActive(true);
+                _sScreen = Instantiate(settingsPrefab);
+                _sScreen.SetActive(false);
             }
 
             //load settings and pause menu when in game scene
             if (scene.name == SceneManager.GetSceneByBuildIndex(1).name)
             {
-                sScreen = Instantiate(settingsPrefab);
-                sScreen.SetActive(false);
-                pScreen = Instantiate(pausePrefab);
-                pScreen.SetActive(false);
+                _sScreen = Instantiate(settingsPrefab);
+                _sScreen.SetActive(false);
+                _pScreen = Instantiate(pausePrefab);
+                _pScreen.SetActive(false);
             }
         }
 
@@ -65,13 +63,13 @@ namespace Managers
                 case true:
                     if (pressedEscape)
                     {
-                        pScreen.SetActive(true);
+                        _pScreen.SetActive(true);
                         Cursor.lockState = CursorLockMode.Confined;
                         Cursor.visible = true;
                     }
                     break;
                 case false:
-                    pScreen.SetActive(false);
+                    _pScreen.SetActive(false);
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                     break;
@@ -82,26 +80,20 @@ namespace Managers
         public void SwitchMenu()
         {
             //check for null before setting the gameobject to active/inactive
-            if (mScreen != null)
+            if (_mScreen != null)
             {
-                mScreen.SetActive(!mScreen.activeSelf);
+                _mScreen.SetActive(!_mScreen.activeSelf);
             }
             
-            if (pScreen != null)
+            if (_pScreen != null)
             {
-                pScreen.SetActive(!pScreen.activeSelf);
+                _pScreen.SetActive(!_pScreen.activeSelf);
             }
             
-            if (sScreen != null)
+            if (_sScreen != null)
             {
-                sScreen.SetActive(!sScreen.activeSelf);
+                _sScreen.SetActive(!_sScreen.activeSelf);
             }
         }
-        
-        public bool IsGameOver()
-        {
-            return _isGameOver;
-        }
-        
     }
 }

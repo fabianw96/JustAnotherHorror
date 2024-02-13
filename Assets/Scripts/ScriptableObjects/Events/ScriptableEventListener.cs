@@ -1,27 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using ScriptableObjects.Events;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ScriptableEventListener : MonoBehaviour
+namespace ScriptableObjects.Events
 {
-    [SerializeField] private ScriptableEvent scriptableEvent;
-    [SerializeField] private UnityEvent eventResponse;
-
-    private void Awake()
+    public class ScriptableEventListener : MonoBehaviour
     {
-        scriptableEvent.Register(this);
-    }
+        [SerializeField] private ScriptableEvent scriptableEvent;
+        [SerializeField] private UnityEvent eventResponse;
 
-    private void OnDestroy()
-    {
-        scriptableEvent.UnRegister(this);
-    }
+        private void Awake()
+        {
+            scriptableEvent.Register(this);
+        }
 
-    public void OnEventRaised()
-    {
-        eventResponse.Invoke();
+        private void OnDestroy()
+        {
+            scriptableEvent.UnRegister(this);
+        }
+
+        public void OnEventRaised()
+        {
+            eventResponse.Invoke();
+        }
     }
 }

@@ -1,4 +1,3 @@
-using Interactables;
 using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;

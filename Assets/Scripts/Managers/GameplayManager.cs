@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Interactables;
 using ScriptableObjects.Events;
@@ -15,7 +14,7 @@ namespace Managers
         private bool _isGameOver;
         private bool _hasEnded;
         private bool _hasWon;
-        private float endTimer = 5f;
+        private float _endTimer = 5f;
 
         private void Awake()
         {
@@ -32,15 +31,14 @@ namespace Managers
         {
             if (_hasWon)
             {
-                endTimer -= Time.deltaTime;
-                if (endTimer <= 0)
+                _endTimer -= Time.deltaTime;
+                if (_endTimer <= 0)
                 {
-                    endTimer = 0;
+                    _endTimer = 0;
                     Debug.Log("You won!");
                     playerWinEvent.RaiseEvent();
                     _hasWon = false;
                 }
-                Debug.Log(endTimer);
             }
         }
 

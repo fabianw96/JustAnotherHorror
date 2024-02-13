@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Interfaces;
@@ -8,8 +7,9 @@ namespace Interactables
     public class Drawer : MonoBehaviour, IInteractable
     {
         private bool _isOpen;
-        [SerializeField] private Animator animator;
         private readonly int _isOpenHash = Animator.StringToHash("isOpen");
+
+        [SerializeField] private Animator animator;
         [SerializeField] private List<AudioClip> drawerSounds;
         [SerializeField] private AudioSource audioSource;
         

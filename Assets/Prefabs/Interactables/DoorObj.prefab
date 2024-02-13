@@ -63,10 +63,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1061602148336785498}
+  - component: {fileID: 2350953785536712496}
   - component: {fileID: 3230576284557108872}
   - component: {fileID: 7365195448214998952}
   - component: {fileID: 6845130475295638295}
-  - component: {fileID: 2350953785536712496}
   - component: {fileID: 2526926840094310650}
   - component: {fileID: 6116324396662456037}
   m_Layer: 0
@@ -91,6 +91,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6072060767145710441}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2350953785536712496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847556242933796156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe6b1dcadafe7e4ea5dddb22a56ab5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2289786126245992976}
+  key: {fileID: 0}
+  audioSource: {fileID: 6116324396662456037}
+  lockedDoorList:
+  - {fileID: 8300000, guid: bfe5f900dafc83b429365594f1104fac, type: 3}
+  - {fileID: 8300000, guid: 3ef077f6cee600f42adc4ff6b9f7ee4f, type: 3}
+  - {fileID: 8300000, guid: 0a436cf74bf5bae4d9e8970bfa6cad29, type: 3}
+  - {fileID: 8300000, guid: c3d3c77b746ef2341a20c4cd05f16ead, type: 3}
+  - {fileID: 8300000, guid: 50959eb98e978124aa1534a716cfab13, type: 3}
+  unlockDoor: {fileID: 8300000, guid: 833103a92dcd80544a8e36e57b319608, type: 3}
+  isFinalDoor: 0
 --- !u!33 &3230576284557108872
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -164,28 +187,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8000001, y: 2, z: 0.050370228}
   m_Center: {x: 0.40000004, y: 1, z: 0.024866717}
---- !u!114 &2350953785536712496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7847556242933796156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fe6b1dcadafe7e4ea5dddb22a56ab5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 2289786126245992976}
-  key: {fileID: 0}
-  audioSource: {fileID: 6116324396662456037}
-  lockedDoorList:
-  - {fileID: 8300000, guid: bfe5f900dafc83b429365594f1104fac, type: 3}
-  - {fileID: 8300000, guid: 3ef077f6cee600f42adc4ff6b9f7ee4f, type: 3}
-  - {fileID: 8300000, guid: 0a436cf74bf5bae4d9e8970bfa6cad29, type: 3}
-  - {fileID: 8300000, guid: c3d3c77b746ef2341a20c4cd05f16ead, type: 3}
-  - {fileID: 8300000, guid: 50959eb98e978124aa1534a716cfab13, type: 3}
-  unlockDoor: {fileID: 8300000, guid: 833103a92dcd80544a8e36e57b319608, type: 3}
 --- !u!208 &2526926840094310650
 NavMeshObstacle:
   m_ObjectHideFlags: 0

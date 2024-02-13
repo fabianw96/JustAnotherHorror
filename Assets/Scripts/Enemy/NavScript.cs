@@ -88,7 +88,8 @@ namespace Enemy
                 if (distance <= catchDistance && player.layer == _playerLayer)
                 {
                     chasing = false;
-                    GameManager.Instance.GameOver(true);
+                    // GameManager.Instance.GameOver(true);
+                    GameplayManager.Instance.GameOver(true);
                 }
             }
 

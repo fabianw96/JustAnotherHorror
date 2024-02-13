@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Interfaces;
 using Managers;
+using ScriptableObjects.Events;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,6 +20,7 @@ namespace Interactables
         [SerializeField] private List<AudioClip> lockedDoorList;
         private int clipIndex;
         [SerializeField] private AudioClip unlockDoor;
+        [SerializeField] private bool isFinalDoor = false;
         
         public void Interaction()
         {
@@ -26,7 +28,14 @@ namespace Interactables
             Debug.Log("Interacted with: " + gameObject);
             if (!GameplayManager.Instance.collectedKeys.Contains(key))
             {
-                audioSource.PlayOneShot(lockedDoorList[clipIndex]);
+                audioSource.clip = lockedDoorList[clipIndex];
+                audioSource.Play();
+                return;
+            }
+
+            if (isFinalDoor)
+            {
+                GameplayManager.Instance.WinGame(true);
                 return;
             }
 
@@ -35,8 +44,14 @@ namespace Interactables
                 audioSource.PlayOneShot(unlockDoor);
                 _isUnlocked = true;
             }
+            
             _isOpen = !_isOpen;
             animator.SetBool(_isOpenHash, _isOpen);
+        }
+
+        public void OpenFinalDoor()
+        {
+            animator.SetBool(_isOpenHash, true);
         }
     }
 }

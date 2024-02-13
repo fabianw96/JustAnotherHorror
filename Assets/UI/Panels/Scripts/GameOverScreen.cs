@@ -22,7 +22,8 @@ namespace UI_Toolkit.Panels
         private void RestartScene()
         {
             Debug.Log("Test!");
-            GameManager.Instance.GameOver(false);
+            // GameManager.Instance.GameOver(false);
+            GameplayManager.Instance.GameOver(false);
             SceneLoader.Load(SceneLoader.Scenes.SampleScene, LoadSceneMode.Single);
         }
     }

@@ -25,7 +25,7 @@ namespace PlayerScripts
         // Update is called once per frame
         void LateUpdate()
         {
-            if (GameManager.Instance.isPaused || GameManager.Instance.IsGameOver()) return;
+            if (GameManager.Instance.isPaused || GameplayManager.Instance.IsGameOver()) return;
             Vector3 playerRotation = Vector3.up * (_mouseInputX * mouseSens);
             playerBody.Rotate(playerRotation);
         

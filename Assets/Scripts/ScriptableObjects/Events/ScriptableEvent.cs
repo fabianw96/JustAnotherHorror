@@ -4,9 +4,9 @@ using UnityEngine;
 namespace ScriptableObjects.Events
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/ScriptableEvent")]
-    public class ScriptableEvent : ScriptableObject
+    public class ScriptableEvent : ScriptableObject, ISerializationCallbackReceiver
     {
-        private List<ScriptableEventListener> listenerList;
+        private List<ScriptableEventListener> listenerList = new();
 
         public void Register(ScriptableEventListener listener)
         {
@@ -26,6 +26,16 @@ namespace ScriptableObjects.Events
             {
                 listener.OnEventRaised();
             }
+        }
+
+        public void OnBeforeSerialize()
+        {
+            // throw new System.NotImplementedException();
+        }
+
+        public void OnAfterDeserialize()
+        {
+            listenerList.Clear();
         }
     }
 }

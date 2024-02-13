@@ -11,7 +11,6 @@ namespace Managers
         [SerializeField] private GameObject pausePrefab;
         [SerializeField] private GameObject settingsPrefab;
         [SerializeField] private GameObject mainMenuPrefab;
-        [SerializeField] private ScriptableEvent playerDeathEvent;
 
         public static GameManager Instance;
         private List<GameObject> interactableList;
@@ -27,11 +26,11 @@ namespace Managers
             //singleton
             if (Instance != null && Instance != this)    
             {
-                Destroy(this);
+                Destroy(gameObject);
                 return;
             }
             Instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
 
             //call when a scene is loaded
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -55,17 +54,6 @@ namespace Managers
                 sScreen.SetActive(false);
                 pScreen = Instantiate(pausePrefab);
                 pScreen.SetActive(false);
-            }
-        }
-        
-
-        public void GameOver(bool state)
-        {
-            _isGameOver = state;
-
-            if (_isGameOver)
-            {
-                playerDeathEvent.RaiseEvent();
             }
         }
 

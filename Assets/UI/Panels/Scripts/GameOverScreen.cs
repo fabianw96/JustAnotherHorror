@@ -15,16 +15,16 @@ namespace UI_Toolkit.Panels
             Cursor.visible = true;
             
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-            root.Q<Button>("Restart").clicked += () => RestartScene();
+            root.Q<Button>("MainMenu").clicked += () => MainMenu();
             root.Q<Button>("Quit").clicked += Application.Quit;
         }
 
-        private void RestartScene()
+        private void MainMenu()
         {
             Debug.Log("Test!");
             // GameManager.Instance.GameOver(false);
             GameplayManager.Instance.GameOver(false);
-            SceneLoader.Load(SceneLoader.Scenes.SampleScene, LoadSceneMode.Single);
+            SceneLoader.Load(SceneLoader.Scenes.MainMenu, LoadSceneMode.Single);
         }
     }
 }

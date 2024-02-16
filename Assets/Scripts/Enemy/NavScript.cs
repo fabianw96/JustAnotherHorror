@@ -10,17 +10,19 @@ namespace Enemy
     public class NavScript : MonoBehaviour
     {
         [Header("Transforms")]
-        [SerializeField] private GameObject player;
-        private LayerMask _playerLayer;
-        [SerializeField] private List<Transform> waypoints;
         private Transform _currentDest;
-        
+        private LayerMask _playerLayer;
+        [SerializeField] private GameObject player;
+        [SerializeField] private List<Transform> waypoints;
+        [SerializeField] private Transform lairWaypoint;
+
         [Header("Range and Time")]
+        private float _defaultStoppingDistance = 0f;
+        private float _hiddenStoppingDistance = 2f;
         [SerializeField] private float detectionRange = 5f;
         [SerializeField] private float catchDistance = 1f;
         [SerializeField][Range(1f, 15f)] private float minIdleTime;
         [SerializeField][Range(1f, 15f)] private float maxIdleTime;
-        
 
         [Header("Speed")] 
         [SerializeField] private float chaseSpeed;
@@ -56,11 +58,12 @@ namespace Enemy
         // Update is called once per frame
         void Update()
         {
-            Debug.Log(_playerLayer.value);
             _distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
+            Vector3 toPlayer = player.transform.position - transform.position;
             EnemyAnimationState();
             
-            if (_distanceToPlayer <= detectionRange && player.layer == _playerLayer)
+            if (_distanceToPlayer <= detectionRange && player.layer == _playerLayer && Vector3.Dot(forward, toPlayer) > 0)
             {
                 //punktprodukt mathf.dot
                 if (!agent.Raycast(player.transform.position, out _hit))
@@ -82,6 +85,7 @@ namespace Enemy
                 if (player.layer != _playerLayer && !_isPlayerHidden)
                 {
                     StopAllCoroutines();
+                    agent.stoppingDistance = _hiddenStoppingDistance;
                     StartCoroutine(StandStill());
                 }
                 
@@ -113,6 +117,18 @@ namespace Enemy
             animator.SetFloat(_speedHash, agent.velocity.magnitude);
         }
 
+        public void MoveToLair()
+        {
+            StopAllCoroutines();
+            _chasing = false;
+            _patrolling = false;
+            agent.destination = lairWaypoint.position;
+            if (agent.remainingDistance <= 1f)
+            {
+                StartCoroutine(StandStill());
+            }
+        }
+
         private IEnumerator StayIdle()
         {
             _idleTime = Random.Range(minIdleTime, maxIdleTime);
@@ -125,6 +141,7 @@ namespace Enemy
         {
             _isPlayerHidden = true;
             yield return new WaitForSeconds(5);
+            agent.stoppingDistance = _defaultStoppingDistance;
             _chasing = false;
             _patrolling = true;
         }

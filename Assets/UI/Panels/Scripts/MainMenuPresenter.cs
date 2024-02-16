@@ -1,10 +1,9 @@
-using System;
 using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace UI_Toolkit.Panels
+namespace UI.Panels.Scripts
 {
     public class MainMenuPresenter : MonoBehaviour
     {

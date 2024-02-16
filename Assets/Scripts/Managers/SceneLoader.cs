@@ -10,8 +10,7 @@ namespace Managers
             MainMenu,
             SampleScene,
             GameOver,
-            PauseMenu,
-            SettingsMenu,
+            GameWin
         }
     
         public static void Load(Scenes scenes, LoadSceneMode mode)
@@ -27,6 +26,11 @@ namespace Managers
         public static void LoadGameOver()
         {
             SceneManager.LoadScene((int)Scenes.GameOver);
+        }
+        
+        public static void LoadGameWin()
+        {
+            SceneManager.LoadScene((int)Scenes.GameWin);
         }
     }
 }

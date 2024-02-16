@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Background" style="flex-grow: 1; align-items: center; justify-content: flex-end;">
+        <ui:Label tabindex="-10" text="Fuck! I fell asleep in one of the rooms. Now I&apos;m trapped in here. There has to be a key here somewhere. I will look behind the counter." parse-escape-sequences="true" display-tooltip-when-elided="true" name="Speech" style="-unity-text-align: middle-center; white-space: normal; text-overflow: clip; font-size: 27px; width: 928px; color: rgb(255, 255, 255); position: relative; top: -15px;" />
+    </ui:VisualElement>
+</ui:UXML>

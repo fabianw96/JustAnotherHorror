@@ -6,7 +6,7 @@ using Cursor = UnityEngine.Cursor;
 
 namespace UI.Panels.Scripts
 {
-    public class GameOverScreen : MonoBehaviour
+    public class GameWonScreen : MonoBehaviour
     {
         private void Awake()
         {
@@ -14,16 +14,8 @@ namespace UI.Panels.Scripts
             Cursor.visible = true;
             
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-            root.Q<Button>("MainMenu").clicked += () => MainMenu();
+            root.Q<Button>("MainMenu").clicked += () => SceneLoader.Load(SceneLoader.Scenes.MainMenu, LoadSceneMode.Single);
             root.Q<Button>("Quit").clicked += Application.Quit;
-        }
-
-        private void MainMenu()
-        {
-            Debug.Log("Test!");
-            // GameManager.Instance.GameOver(false);
-            GameplayManager.Instance.GameOver(false);
-            SceneLoader.Load(SceneLoader.Scenes.MainMenu, LoadSceneMode.Single);
         }
     }
 }

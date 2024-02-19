@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 9205090164825444085}
+  triggerEvent: {fileID: 0}
 --- !u!1 &4347191030653660150
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +186,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: f60ebd8b17ca0444f8d1e79a509a64ab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -288,7 +289,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &7873604550567118718
 MonoBehaviour:
@@ -305,7 +306,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 395.3
-  m_ReferenceResolution: {x: 2.5, y: 3}
+  m_ReferenceResolution: {x: 1.85, y: 3}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.282
   m_PhysicalUnit: 3

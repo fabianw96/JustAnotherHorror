@@ -17,17 +17,18 @@ namespace Interactables
         [SerializeField]private Animator animator;
         [SerializeField] private Key key;
         [SerializeField] private AudioSource audioSource;
-        [SerializeField] private List<AudioClip> lockedDoorList;
+        [SerializeField] private List<AudioClip> doorSoundsList;
         [SerializeField] private AudioClip unlockDoor;
+        [SerializeField] private AudioClip openDoor;
         [SerializeField] private bool isFinalDoor;
         
         public void Interaction()
         {
-            _clipIndex = Random.Range(0, lockedDoorList.Count);
+            _clipIndex = Random.Range(0, doorSoundsList.Count);
             Debug.Log("Interacted with: " + gameObject);
             if (!GameplayManager.Instance.collectedKeys.Contains(key))
             {
-                audioSource.clip = lockedDoorList[_clipIndex];
+                audioSource.clip = doorSoundsList[_clipIndex];
                 audioSource.Play();
                 return;
             }
@@ -42,15 +43,24 @@ namespace Interactables
             {
                 audioSource.PlayOneShot(unlockDoor);
                 _isUnlocked = true;
+                return;
             }
             
-            _isOpen = !_isOpen;
+            if (_isUnlocked && !_isOpen)
+            {
+                audioSource.clip = openDoor;
+            }
+            
+            audioSource.Play();
+            _isOpen = true;
             animator.SetBool(_isOpenHash, _isOpen);
         }
 
         public void OpenFinalDoor()
         {
+            audioSource.PlayOneShot(unlockDoor);
             animator.SetBool(_isOpenHash, true);
+            audioSource.PlayOneShot(openDoor);
         }
     }
 }

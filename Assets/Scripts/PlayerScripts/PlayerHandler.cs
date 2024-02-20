@@ -8,7 +8,6 @@ namespace PlayerScripts
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerHandler : MonoBehaviour
     {
-        // private PlayerInteraction Interaction = new();
         private Rigidbody _rBody;
         private RaycastHit _raycastHit;
         [SerializeField] private GameObject interactHud;

@@ -13,12 +13,13 @@ namespace Enemy
         private Transform _currentDest;
         private LayerMask _playerLayer;
         [SerializeField] private GameObject player;
+        private Vector3 _playerPosition;
         [SerializeField] private List<Transform> waypoints;
         [SerializeField] private Transform lairWaypoint;
 
-        [Header("Range and Time")]
-        private float _defaultStoppingDistance = 0f;
-        private float _hiddenStoppingDistance = 2f;
+        [Header("Range and Time")] 
+        private const float DefaultStoppingDistance = 0f;
+        private const float HiddenStoppingDistance = 2f;
         [SerializeField] private float detectionRange = 5f;
         [SerializeField] private float catchDistance = 1f;
         [SerializeField][Range(1f, 15f)] private float minIdleTime;
@@ -39,6 +40,7 @@ namespace Enemy
         private int _rndNum;
         private bool _patrolling;
         private bool _chasing;
+        private bool _returningToLair;
         private float _idleTime;
         private float _chaseTime;
         private Vector3 _dest;
@@ -58,14 +60,14 @@ namespace Enemy
         // Update is called once per frame
         void Update()
         {
-            _distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            _playerPosition = player.transform.position;
+            _distanceToPlayer = Vector3.Distance(_playerPosition, transform.position);
             Vector3 forward = transform.TransformDirection(Vector3.forward);
-            Vector3 toPlayer = player.transform.position - transform.position;
+            Vector3 toPlayer = _playerPosition - transform.position;
             EnemyAnimationState();
             
             if (_distanceToPlayer <= detectionRange && player.layer == _playerLayer && Vector3.Dot(forward, toPlayer) > 0)
             {
-                //punktprodukt mathf.dot
                 if (!agent.Raycast(player.transform.position, out _hit))
                 {
                     _isPlayerHidden = false;
@@ -85,7 +87,7 @@ namespace Enemy
                 if (player.layer != _playerLayer && !_isPlayerHidden)
                 {
                     StopAllCoroutines();
-                    agent.stoppingDistance = _hiddenStoppingDistance;
+                    agent.stoppingDistance = HiddenStoppingDistance;
                     StartCoroutine(StandStill());
                 }
                 
@@ -102,13 +104,21 @@ namespace Enemy
                 _dest = _currentDest.position;
                 agent.destination = _dest;
                 agent.speed = patrolSpeed;
-                if (agent.remainingDistance <= 1f) 
+                if (agent.remainingDistance <= 1f && _patrolling) 
                 {
                     _patrolling = false;
                     agent.speed = 0;
                     StopCoroutine(StayIdle());
                     StartCoroutine(StayIdle());
                 }
+            }
+
+            if (_returningToLair)
+            {
+                if (!(agent.remainingDistance <= 1f)) return;
+                
+                Debug.Log("CLOSE");
+                StartCoroutine(StandStill());
             }
         }
 
@@ -122,11 +132,8 @@ namespace Enemy
             StopAllCoroutines();
             _chasing = false;
             _patrolling = false;
+            _returningToLair = true;
             agent.destination = lairWaypoint.position;
-            if (agent.remainingDistance <= 1f)
-            {
-                StartCoroutine(StandStill());
-            }
         }
 
         private IEnumerator StayIdle()
@@ -140,8 +147,11 @@ namespace Enemy
         private IEnumerator StandStill()
         {
             _isPlayerHidden = true;
+            Debug.Log("Pre-Wait");
+            _returningToLair = false;
             yield return new WaitForSeconds(5);
-            agent.stoppingDistance = _defaultStoppingDistance;
+            Debug.Log("Post-Wait");
+            agent.stoppingDistance = DefaultStoppingDistance;
             _chasing = false;
             _patrolling = true;
         }

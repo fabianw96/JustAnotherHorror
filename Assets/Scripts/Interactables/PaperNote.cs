@@ -11,7 +11,6 @@ namespace Interactables
         [SerializeField] private ScriptableEvent triggerEvent;
 
         private bool _hasTriggered;
-        // [SerializeField] private Transform player;
         private Transform _cameraTrans;
         private bool _isReading;
 

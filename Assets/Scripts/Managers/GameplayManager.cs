@@ -29,17 +29,15 @@ namespace Managers
 
         private void Update()
         {
-            if (_hasWon)
-            {
-                _endTimer -= Time.deltaTime;
-                if (_endTimer <= 0)
-                {
-                    _endTimer = 0;
-                    Debug.Log("You won!");
-                    playerWinEvent.RaiseEvent();
-                    _hasWon = false;
-                }
-            }
+            if (!_hasWon) return;
+            _endTimer -= Time.deltaTime;
+            
+            if (!(_endTimer <= 0)) return;
+            
+            _endTimer = 0;
+            Debug.Log("You won!");
+            playerWinEvent.RaiseEvent();
+            _hasWon = false;
         }
 
         public void AddKeyToList(Key key)

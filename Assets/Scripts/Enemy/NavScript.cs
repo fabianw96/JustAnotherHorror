@@ -16,6 +16,7 @@ namespace Enemy
         private Vector3 _playerPosition;
         [SerializeField] private List<Transform> waypoints;
         [SerializeField] private Transform lairWaypoint;
+        [SerializeField] private Transform finalStandWp;
 
         [Header("Range and Time")] 
         private const float DefaultStoppingDistance = 0f;
@@ -134,6 +135,16 @@ namespace Enemy
             _patrolling = false;
             _returningToLair = true;
             agent.destination = lairWaypoint.position;
+        }
+
+        public void StartFinalStand()
+        {
+            StopAllCoroutines();
+            _chasing = false;
+            _patrolling = false;
+            agent.Warp(finalStandWp.position);
+            agent.destination = _playerPosition;
+            agent.speed = chaseSpeed;
         }
 
         private IEnumerator StayIdle()

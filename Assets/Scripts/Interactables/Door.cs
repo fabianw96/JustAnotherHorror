@@ -16,11 +16,15 @@ namespace Interactables
         
         [SerializeField]private Animator animator;
         [SerializeField] private Key key;
+        [SerializeField] private Key finalKey;
+        [SerializeField] private FinalDoor finalDoor;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private List<AudioClip> doorSoundsList;
         [SerializeField] private AudioClip unlockDoor;
         [SerializeField] private AudioClip openDoor;
         [SerializeField] private bool isFinalDoor;
+        
+        
         
         public void Interaction()
         {
@@ -35,6 +39,7 @@ namespace Interactables
 
             if (isFinalDoor)
             {
+                finalDoor.OnFinalStand();
                 GameplayManager.Instance.WinGame(true);
                 return;
             }

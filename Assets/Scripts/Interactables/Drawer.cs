@@ -20,12 +20,13 @@ namespace Interactables
             switch (_isOpen)
             {
                 case false:
-                    audioSource.PlayOneShot(drawerSounds[0]);
+                    audioSource.clip = drawerSounds[0];
                     break;
                 case true:
-                    audioSource.PlayOneShot(drawerSounds[1]);
+                    audioSource.clip = drawerSounds[1];
                     break;
             }
+            audioSource.Play();
             animator.SetBool(_isOpenHash, _isOpen);
         }
     }

@@ -11,7 +11,6 @@ namespace Enemy
         
         public void PlayFootsteps()
         {
-            //TODO play footstep sounds here
             _clip = clipList[Random.Range(0, clipList.Count)];
 
             source.clip = _clip;

@@ -21,6 +21,9 @@ namespace Enemy
         [Header("Range and Time")] 
         private const float DefaultStoppingDistance = 0f;
         private const float HiddenStoppingDistance = 2f;
+        private bool _isTimeTicking = true;
+        [SerializeField] private float tameTimer = 300f;
+        [SerializeField] private float timeToNextChase = 120f;
         [SerializeField] private float detectionRange = 5f;
         [SerializeField] private float catchDistance = 1f;
         [SerializeField][Range(1f, 15f)] private float minIdleTime;
@@ -39,9 +42,9 @@ namespace Enemy
         
         private NavMeshHit _hit;
         private int _rndNum;
-        private bool _patrolling;
-        private bool _chasing;
-        private bool _returningToLair;
+        private bool _isPatrolling;
+        private bool _isChasing;
+        private bool _isReturningToLair;
         private float _idleTime;
         private float _chaseTime;
         private Vector3 _dest;
@@ -54,7 +57,7 @@ namespace Enemy
         private void Awake()
         {
             _playerLayer = LayerMask.NameToLayer("Player");
-            _patrolling = true;
+            _isPatrolling = true;
             _currentDest = waypoints[Random.Range(0, waypoints.Count)];
         }
 
@@ -66,55 +69,62 @@ namespace Enemy
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 toPlayer = _playerPosition - transform.position;
             EnemyAnimationState();
+
+            if (_isTimeTicking)
+            {
+                tameTimer -= Time.deltaTime;
+            }
+
+            if (tameTimer <= 0f)
+            {
+                _isTimeTicking = false;
+                MoveToPlayer();
+            }
             
             if (_distanceToPlayer <= detectionRange && player.layer == _playerLayer && Vector3.Dot(forward, toPlayer) > 0)
             {
                 if (!agent.Raycast(player.transform.position, out _hit))
                 {
-                    _isPlayerHidden = false;
-                    _patrolling = false;
-                    StopCoroutine(StayIdle());
-                    _chasing = true;
+                    MoveToPlayer();
                 }
             }
 
-            if (_chasing)
+            if (_isChasing)
             {
+                _isTimeTicking = false;
                 _dest = player.transform.position;
                 agent.destination = _dest;
                 agent.speed = chaseSpeed;
                 float distance = Vector3.Distance(_dest, agent.transform.position);
-                
-                if (player.layer != _playerLayer && !_isPlayerHidden)
+
+                if (player.layer != _playerLayer && !_isPlayerHidden && agent.stoppingDistance <= HiddenStoppingDistance)
                 {
-                    StopAllCoroutines();
-                    agent.stoppingDistance = HiddenStoppingDistance;
                     StartCoroutine(StandStill());
                 }
                 
                 if (distance <= catchDistance && player.layer == _playerLayer)
                 {
-                    _chasing = false;
-                    _patrolling = true;
+                    _isChasing = false;
+                    _isPatrolling = true;
                     GameplayManager.Instance.GameOver(true);
                 }
             }
 
-            if (_patrolling)
+            if (_isPatrolling)
             {
                 _dest = _currentDest.position;
                 agent.destination = _dest;
                 agent.speed = patrolSpeed;
-                if (agent.remainingDistance <= 1f && _patrolling) 
+                if (agent.remainingDistance <= 1f && _isPatrolling) 
                 {
-                    _patrolling = false;
+                    _isPatrolling = false;
                     agent.speed = 0;
                     StopCoroutine(StayIdle());
                     StartCoroutine(StayIdle());
                 }
             }
 
-            if (_returningToLair)
+            if (_isReturningToLair)
             {
                 if (!(agent.remainingDistance <= 1f)) return;
                 
@@ -131,27 +141,36 @@ namespace Enemy
         public void MoveToLair()
         {
             StopAllCoroutines();
-            _chasing = false;
-            _patrolling = false;
-            _returningToLair = true;
+            _isChasing = false;
+            _isPatrolling = false;
+            _isReturningToLair = true;
             agent.destination = lairWaypoint.position;
         }
 
         public void StartFinalStand()
         {
             StopAllCoroutines();
-            _chasing = false;
-            _patrolling = false;
+            _isChasing = false;
+            _isPatrolling = false;
             agent.Warp(finalStandWp.position);
             agent.destination = _playerPosition;
             agent.speed = chaseSpeed;
+        }
+
+        private void MoveToPlayer()
+        {
+            StopAllCoroutines();
+            _isPlayerHidden = false;
+            _isPatrolling = false;
+            _isChasing = true;
+            tameTimer = timeToNextChase;
         }
 
         private IEnumerator StayIdle()
         {
             _idleTime = Random.Range(minIdleTime, maxIdleTime);
             yield return new WaitForSeconds(_idleTime);
-            _patrolling = true;
+            _isPatrolling = true;
             _currentDest = waypoints[Random.Range(0, waypoints.Count)];
         }
 
@@ -159,12 +178,13 @@ namespace Enemy
         {
             _isPlayerHidden = true;
             Debug.Log("Pre-Wait");
-            _returningToLair = false;
+            _isReturningToLair = false;
             yield return new WaitForSeconds(5);
             Debug.Log("Post-Wait");
             agent.stoppingDistance = DefaultStoppingDistance;
-            _chasing = false;
-            _patrolling = true;
+            _isChasing = false;
+            _isPatrolling = true;
+            _isTimeTicking = true;
         }
     }
 }

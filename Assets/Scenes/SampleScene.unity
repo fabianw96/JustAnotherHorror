@@ -76052,6 +76052,11 @@ PrefabInstance:
       objectReference: {fileID: 346348679284563889}
     - target: {fileID: 189798460640797564, guid: 452d5b3ad51189b47b9947a1baff8d4a,
         type: 3}
+      propertyPath: tameTimer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 189798460640797564, guid: 452d5b3ad51189b47b9947a1baff8d4a,
+        type: 3}
       propertyPath: finalStandWp
       value: 
       objectReference: {fileID: 1512883406}

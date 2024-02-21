@@ -16,6 +16,9 @@ namespace PlayerScripts
         private Vector2 _inputVector;
         private Vector3 _movementVector;
         private bool _isSprinting;
+        private bool _canSprint = true;
+        private float _sprintTimer;
+        [SerializeField] private float maxSprintTime = 2f; 
         [SerializeField] private float speed = 5f;
         [SerializeField] private float maxForce;
         [SerializeField] private float sprintMulti = 2f;
@@ -24,6 +27,7 @@ namespace PlayerScripts
         private void Start()
         {
             _myCamera = Camera.main;
+            _sprintTimer = maxSprintTime;
         }
 
         private void Awake()
@@ -34,6 +38,11 @@ namespace PlayerScripts
         private void Update()
         {
             HighlightInteraction();
+            if (_sprintTimer <= 0f)
+            {
+                _canSprint = false;
+                _sprintTimer = 0f;
+            }
         }
 
         // Update is called once per frame
@@ -86,12 +95,24 @@ namespace PlayerScripts
             Vector3 currentVelocity = _rBody.velocity;
             Vector3 targetVelocity = new Vector3(_inputVector.x, 0f, _inputVector.y);
 
-            if (_isSprinting)
+            if (_isSprinting && _canSprint)
             {
+                _sprintTimer -= Time.deltaTime;
                 targetVelocity *= speed * sprintMulti;
             }
             else
             {
+                if (_sprintTimer <= maxSprintTime)
+                {
+                    _sprintTimer += Time.deltaTime;
+                }
+                
+                if (_sprintTimer >= maxSprintTime)
+                {
+                    _sprintTimer = maxSprintTime;
+                    _canSprint = true;
+                }
+                
                 targetVelocity *= speed;
             }
             

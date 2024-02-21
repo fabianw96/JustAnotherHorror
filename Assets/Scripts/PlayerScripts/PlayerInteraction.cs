@@ -3,11 +3,13 @@ using UnityEngine;
 
 namespace PlayerScripts
 {
-    public class PlayerInteraction
+    public static class PlayerInteraction
     {
-        private const float RaycastDistance = 5f;
+        private static RaycastHit _raycastHit;
+        public static readonly float RaycastDistance = 1.5f;
 
-        public void Interact()
+        
+        public static void Interact()
         {
             RaycastHit hitInfo = new RaycastHit();
             bool hit = Camera.main != null && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, RaycastDistance);

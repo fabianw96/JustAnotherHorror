@@ -141,6 +141,7 @@ namespace Enemy
         public void MoveToLair()
         {
             StopAllCoroutines();
+            _isTimeTicking = false;
             _isChasing = false;
             _isPatrolling = false;
             _isReturningToLair = true;
@@ -150,6 +151,7 @@ namespace Enemy
         public void StartFinalStand()
         {
             StopAllCoroutines();
+            _isTimeTicking = false;
             _isChasing = false;
             _isPatrolling = false;
             agent.Warp(finalStandWp.position);

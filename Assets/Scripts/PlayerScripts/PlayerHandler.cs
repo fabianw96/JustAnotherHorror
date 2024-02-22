@@ -2,6 +2,7 @@ using Interfaces;
 using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace PlayerScripts
 {
@@ -10,7 +11,10 @@ namespace PlayerScripts
     {
         private Rigidbody _rBody;
         private RaycastHit _raycastHit;
+        private VisualElement _hudRoot;
+        private LayerMask _hiddenLayer;
         [SerializeField] private GameObject interactHud;
+
     
         [Header("Movement")]
         private Vector2 _inputVector;
@@ -23,11 +27,13 @@ namespace PlayerScripts
         [SerializeField] private float maxForce;
         [SerializeField] private float sprintMulti = 2f;
         private Camera _myCamera;
-
+        
         private void Start()
         {
             _myCamera = Camera.main;
             _sprintTimer = maxSprintTime;
+            _hiddenLayer = LayerMask.NameToLayer("PlayerHidden");
+            _hudRoot = interactHud.GetComponent<UIDocument>().rootVisualElement;
         }
 
         private void Awake()
@@ -53,13 +59,47 @@ namespace PlayerScripts
         
         private void HighlightInteraction()
         {
-            if (_myCamera == null || !Physics.Raycast(_myCamera.ScreenPointToRay(Input.mousePosition), out _raycastHit,
-                    PlayerInteraction.RaycastDistance))
+            if (!FindInteractable())
             {
-                interactHud.SetActive(false);
+                _hudRoot.Q<Label>("Interact").visible = false;
+                _hudRoot.Q<Label>("InteractLabel").visible = false;
                 return;
             }
-            interactHud.SetActive(_raycastHit.transform.gameObject.GetComponent<IInteractable>() != null);
+            
+            _hudRoot.Q<Label>("Interact").visible = _raycastHit.transform.gameObject.GetComponent<IInteractable>() != null;
+            _hudRoot.Q<Label>("InteractLabel").visible = _raycastHit.transform.gameObject.GetComponent<IInteractable>() != null;
+
+
+            switch (_raycastHit.transform.gameObject.tag)
+            {
+                case "Locker":
+                    if (gameObject.layer == _hiddenLayer)
+                    {
+                        _hudRoot.Q<Label>("InteractLabel").text = "LMB to unhide";
+                        break;
+                    }
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to hide";
+                    break;
+                case "Key":
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to pickup key";
+                    break;
+                case "Door":
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to open door";
+                    break;
+                case "Note":
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to pickup note";
+                    break;
+                default:
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to interact";
+                    break;
+            }
+        }
+
+        private bool FindInteractable()
+        {
+            return _myCamera == null || !Physics.Raycast(_myCamera.ScreenPointToRay(Input.mousePosition),
+                out _raycastHit,
+                PlayerInteraction.RaycastDistance);
         }
     
     

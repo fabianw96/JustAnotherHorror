@@ -23,6 +23,8 @@
     padding-right: 12px;
     padding-bottom: 12px;
     padding-left: 12px;
+    -unity-font: url('project://database/Assets/Art/Font/Kobajeon-w18YP.otf?fileID=12800000&guid=0a5f675297fe55a4280d95d0853a6aff&type=3#Kobajeon-w18YP');
+    -unity-font-definition: initial;
 }
 
 .button-main-title:hover {

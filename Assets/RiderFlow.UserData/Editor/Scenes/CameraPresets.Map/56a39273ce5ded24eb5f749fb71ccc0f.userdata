@@ -1,0 +1,16 @@
+{
+  "4e3ea2316342e364aa3c2508629828ab": {
+    "sceneGuid": "56a39273ce5ded24eb5f749fb71ccc0f",
+    "uniqueCameraId": "4e3ea2316342e364aa3c2508629828ab",
+    "name": "Camera Preset",
+    "pointX": 34.1111565,
+    "pointY": 1.85841155,
+    "pointZ": 19.18981,
+    "directionX": 0.00487137027,
+    "directionY": -0.9459782,
+    "directionZ": -0.009807878,
+    "directionW": -0.324819416,
+    "zoom": 0.5736934,
+    "cameraMode": 2
+  }
+}

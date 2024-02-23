@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Interfaces;
 using Managers;
 using UnityEngine;
@@ -22,11 +24,13 @@ namespace PlayerScripts
         private bool _isSprinting;
         private bool _canSprint = true;
         private float _sprintTimer;
-        [SerializeField] private float maxSprintTime = 2f; 
+        [SerializeField] private float maxSprintTime = 2f;
         [SerializeField] private float speed = 5f;
         [SerializeField] private float maxForce;
         [SerializeField] private float sprintMulti = 2f;
         private Camera _myCamera;
+        private Dictionary<GameObject, IInteractable> _interactableCache = new();
+        
         
         private void Start()
         {
@@ -44,6 +48,9 @@ namespace PlayerScripts
         private void Update()
         {
             HighlightInteraction();
+            _hudRoot.Q<ProgressBar>("StaminaBar").value = _sprintTimer;
+            _hudRoot.Q<ProgressBar>("StaminaBar").visible = !GameManager.Instance.isPaused;
+            
             if (_sprintTimer <= 0f)
             {
                 _canSprint = false;
@@ -59,15 +66,23 @@ namespace PlayerScripts
         
         private void HighlightInteraction()
         {
-            if (!FindInteractable())
+            if (_myCamera == null || !Physics.Raycast(_myCamera.ScreenPointToRay(Input.mousePosition),
+                    out _raycastHit,
+                    PlayerInteraction.RaycastDistance))
             {
                 _hudRoot.Q<Label>("Interact").visible = false;
                 _hudRoot.Q<Label>("InteractLabel").visible = false;
                 return;
             }
+
+            if (!_interactableCache.ContainsKey(_raycastHit.transform.gameObject))
+            {
+                _interactableCache[_raycastHit.transform.gameObject] = _raycastHit.transform.gameObject.GetComponent<IInteractable>();
+                Debug.Log("Added Interactable to dictionary: " + _interactableCache[_raycastHit.transform.gameObject]);
+            }
             
-            _hudRoot.Q<Label>("Interact").visible = _raycastHit.transform.gameObject.GetComponent<IInteractable>() != null;
-            _hudRoot.Q<Label>("InteractLabel").visible = _raycastHit.transform.gameObject.GetComponent<IInteractable>() != null;
+            _hudRoot.Q<Label>("Interact").visible = _interactableCache[_raycastHit.transform.gameObject] != null;
+            _hudRoot.Q<Label>("InteractLabel").visible = _interactableCache[_raycastHit.transform.gameObject] != null;
 
 
             switch (_raycastHit.transform.gameObject.tag)
@@ -94,15 +109,7 @@ namespace PlayerScripts
                     break;
             }
         }
-
-        private bool FindInteractable()
-        {
-            return _myCamera == null || !Physics.Raycast(_myCamera.ScreenPointToRay(Input.mousePosition),
-                out _raycastHit,
-                PlayerInteraction.RaycastDistance);
-        }
-    
-    
+        
         public void OnMove(InputAction.CallbackContext context)
         {
             _inputVector = context.ReadValue<Vector2>();
@@ -168,4 +175,5 @@ namespace PlayerScripts
             _rBody.AddForce(new Vector3(velocityChange.x, 0f, velocityChange.z), ForceMode.VelocityChange);
         }
     }
+    
 }

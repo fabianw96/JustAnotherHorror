@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6001689463927900585}
   - component: {fileID: 5702193498228734865}
-  - component: {fileID: 8032824091389358964}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -51,45 +50,4 @@ MonoBehaviour:
     type: 3}
   mainMenuPrefab: {fileID: 5054086610633544348, guid: bbac41f316a6abb4a8df9e4167bbd57f,
     type: 3}
-  playerDeathEvent: {fileID: 11400000, guid: 4925350131c6a2e4a88c7323b0505e63, type: 2}
   isPaused: 0
---- !u!114 &8032824091389358964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 24030531210816551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 252d66d6946af5c489e8560ce171f3b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scriptableEvent: {fileID: 11400000, guid: 4925350131c6a2e4a88c7323b0505e63, type: 2}
-  eventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadGameOver
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2

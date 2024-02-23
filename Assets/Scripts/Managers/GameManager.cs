@@ -41,18 +41,17 @@ namespace Managers
             {
                 _mScreen = Instantiate(mainMenuPrefab);
                 _mScreen.SetActive(true);
-                _sScreen = Instantiate(settingsPrefab);
-                _sScreen.SetActive(false);
             }
 
             //load settings and pause menu when in game scene
             if (scene.name == SceneManager.GetSceneByBuildIndex(1).name)
             {
-                _sScreen = Instantiate(settingsPrefab);
-                _sScreen.SetActive(false);
                 _pScreen = Instantiate(pausePrefab);
                 _pScreen.SetActive(false);
             }
+            
+            _sScreen = Instantiate(settingsPrefab);
+            _sScreen.SetActive(false);
         }
 
         public void PauseGame(bool pressedEscape)

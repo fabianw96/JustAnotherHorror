@@ -18,6 +18,8 @@ namespace Interactables
         [SerializeField] private Transform hideTransform;
         [SerializeField] private List<AudioClip> clipList;
         [SerializeField] private AudioSource audioSource;
+        [SerializeField] private Light hideLight;
+        [SerializeField] private Light playerLight;
 
 
         private void Awake()
@@ -43,6 +45,8 @@ namespace Interactables
             audioSource.PlayOneShot(clipList[0]);
             Camera.main.transform.SetParent(hideTransform);
             Camera.main.transform.localPosition = Vector3.zero;
+            hideLight.enabled = true;
+            playerLight.enabled = false;
             player.layer = _hiddenLayer;
             _isPlayerHidden = true;
         }
@@ -52,6 +56,8 @@ namespace Interactables
             audioSource.PlayOneShot(clipList[1]);
             Camera.main.transform.SetParent(player.transform);
             Camera.main.transform.localPosition = new Vector3(0, 0.5f, 0);
+            hideLight.enabled = false;
+            playerLight.enabled = true;
             player.layer = _playerLayer;
             _isPlayerHidden = false;
         }

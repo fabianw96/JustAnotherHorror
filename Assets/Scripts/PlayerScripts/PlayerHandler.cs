@@ -1,7 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using Interfaces;
 using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace PlayerScripts
 {
@@ -10,7 +13,10 @@ namespace PlayerScripts
     {
         private Rigidbody _rBody;
         private RaycastHit _raycastHit;
+        private VisualElement _hudRoot;
+        private LayerMask _hiddenLayer;
         [SerializeField] private GameObject interactHud;
+
     
         [Header("Movement")]
         private Vector2 _inputVector;
@@ -18,16 +24,20 @@ namespace PlayerScripts
         private bool _isSprinting;
         private bool _canSprint = true;
         private float _sprintTimer;
-        [SerializeField] private float maxSprintTime = 2f; 
+        [SerializeField] private float maxSprintTime = 2f;
         [SerializeField] private float speed = 5f;
         [SerializeField] private float maxForce;
         [SerializeField] private float sprintMulti = 2f;
         private Camera _myCamera;
-
+        private Dictionary<GameObject, IInteractable> _interactableCache = new();
+        
+        
         private void Start()
         {
             _myCamera = Camera.main;
             _sprintTimer = maxSprintTime;
+            _hiddenLayer = LayerMask.NameToLayer("PlayerHidden");
+            _hudRoot = interactHud.GetComponent<UIDocument>().rootVisualElement;
         }
 
         private void Awake()
@@ -38,6 +48,9 @@ namespace PlayerScripts
         private void Update()
         {
             HighlightInteraction();
+            _hudRoot.Q<ProgressBar>("StaminaBar").value = _sprintTimer;
+            _hudRoot.Q<ProgressBar>("StaminaBar").visible = !GameManager.Instance.isPaused;
+            
             if (_sprintTimer <= 0f)
             {
                 _canSprint = false;
@@ -53,16 +66,50 @@ namespace PlayerScripts
         
         private void HighlightInteraction()
         {
-            if (_myCamera == null || !Physics.Raycast(_myCamera.ScreenPointToRay(Input.mousePosition), out _raycastHit,
+            if (_myCamera == null || !Physics.Raycast(_myCamera.ScreenPointToRay(Input.mousePosition),
+                    out _raycastHit,
                     PlayerInteraction.RaycastDistance))
             {
-                interactHud.SetActive(false);
+                _hudRoot.Q<Label>("Interact").visible = false;
+                _hudRoot.Q<Label>("InteractLabel").visible = false;
                 return;
             }
-            interactHud.SetActive(_raycastHit.transform.gameObject.GetComponent<IInteractable>() != null);
+
+            if (!_interactableCache.ContainsKey(_raycastHit.transform.gameObject))
+            {
+                _interactableCache[_raycastHit.transform.gameObject] = _raycastHit.transform.gameObject.GetComponent<IInteractable>();
+                Debug.Log("Added Interactable to dictionary: " + _interactableCache[_raycastHit.transform.gameObject]);
+            }
+            
+            _hudRoot.Q<Label>("Interact").visible = _interactableCache[_raycastHit.transform.gameObject] != null;
+            _hudRoot.Q<Label>("InteractLabel").visible = _interactableCache[_raycastHit.transform.gameObject] != null;
+
+
+            switch (_raycastHit.transform.gameObject.tag)
+            {
+                case "Locker":
+                    if (gameObject.layer == _hiddenLayer)
+                    {
+                        _hudRoot.Q<Label>("InteractLabel").text = "LMB to unhide";
+                        break;
+                    }
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to hide";
+                    break;
+                case "Key":
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to pickup key";
+                    break;
+                case "Door":
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to open door";
+                    break;
+                case "Note":
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to pickup note";
+                    break;
+                default:
+                    _hudRoot.Q<Label>("InteractLabel").text = "LMB to interact";
+                    break;
+            }
         }
-    
-    
+        
         public void OnMove(InputAction.CallbackContext context)
         {
             _inputVector = context.ReadValue<Vector2>();
@@ -128,4 +175,5 @@ namespace PlayerScripts
             _rBody.AddForce(new Vector3(velocityChange.x, 0f, velocityChange.z), ForceMode.VelocityChange);
         }
     }
+    
 }

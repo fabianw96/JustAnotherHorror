@@ -152,11 +152,11 @@ namespace Enemy
         {
             StopAllCoroutines();
             _isTimeTicking = false;
-            _isChasing = false;
             _isPatrolling = false;
             agent.Warp(finalStandWp.position);
             agent.destination = _playerPosition;
             agent.speed = chaseSpeed;
+            _isChasing = true;
         }
 
         private void MoveToPlayer()

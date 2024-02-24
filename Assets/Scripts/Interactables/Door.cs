@@ -16,7 +16,6 @@ namespace Interactables
         
         [SerializeField]private Animator animator;
         [SerializeField] private Key key;
-        [SerializeField] private Key finalKey;
         [SerializeField] private FinalDoor finalDoor;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private List<AudioClip> doorSoundsList;

@@ -1,4 +1,18 @@
 {
+  "61bb5a2d150705b42b383809706cf84a": {
+    "sceneGuid": "56a39273ce5ded24eb5f749fb71ccc0f",
+    "uniqueCameraId": "61bb5a2d150705b42b383809706cf84a",
+    "name": "GameOver",
+    "pointX": 36.3540726,
+    "pointY": 1.85564446,
+    "pointZ": 19.48605,
+    "directionX": 0.0348370224,
+    "directionY": -0.9655343,
+    "directionZ": -0.156375617,
+    "directionW": -0.206348553,
+    "zoom": 0.5736934,
+    "cameraMode": 2
+  },
   "4e3ea2316342e364aa3c2508629828ab": {
     "sceneGuid": "56a39273ce5ded24eb5f749fb71ccc0f",
     "uniqueCameraId": "4e3ea2316342e364aa3c2508629828ab",

@@ -1,5 +1,6 @@
 using System.Linq;
 using Managers;
+using PlayerScripts;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
@@ -12,6 +13,7 @@ namespace UI.Panels.Scripts
         private DropdownField _displayResolution;
         private DropdownField _quality;
         private Slider _volumeSlider;
+        private Slider _sensSlider;
         private VisualElement _root;
         private float _currentVolume;
     
@@ -24,6 +26,7 @@ namespace UI.Panels.Scripts
             InitDisplayResolution();
             InitQualitySettings();
             InitVolume();
+            InitSens();
         }
     
 
@@ -32,6 +35,7 @@ namespace UI.Panels.Scripts
             var resolution = Screen.resolutions[_displayResolution.index];
             Screen.SetResolution(resolution.width, resolution.height, true);
             QualitySettings.SetQualityLevel(_quality.index, true);
+            PlayerCamera.SetMouseSens(_sensSlider.value);
             audioMixer.SetFloat("Volume", Mathf.Log10(_volumeSlider.value) * 20);
             GameManager.Instance.isExtraMenu = false;
             GameManager.Instance.SwitchMenu();
@@ -48,7 +52,12 @@ namespace UI.Panels.Scripts
             _volumeSlider = _root.Q<Slider>("Volume");
             audioMixer.GetFloat("Volume", out _currentVolume);
             _volumeSlider.value = Mathf.Pow(10, (_currentVolume / 20));
-            
+        }
+
+        private void InitSens()
+        {
+            _sensSlider = _root.Q<Slider>("Sens");
+            _sensSlider.value = PlayerCamera.GetMouseSens();
         }
 
         private void InitQualitySettings()

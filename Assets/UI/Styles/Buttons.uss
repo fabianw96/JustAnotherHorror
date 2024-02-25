@@ -35,3 +35,9 @@
 .button-main-title:active {
     background-color: rgb(255, 146, 148);
 }
+
+.unity-text-field {
+    opacity: 0.98;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+}

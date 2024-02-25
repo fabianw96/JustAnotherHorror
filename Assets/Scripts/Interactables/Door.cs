@@ -29,6 +29,7 @@ namespace Interactables
         {
             _clipIndex = Random.Range(0, doorSoundsList.Count);
             Debug.Log("Interacted with: " + gameObject);
+            //if key has not been picked up, play random "rattle" sound
             if (!GameplayManager.Instance.collectedKeys.Contains(key))
             {
                 audioSource.clip = doorSoundsList[_clipIndex];
@@ -36,13 +37,14 @@ namespace Interactables
                 return;
             }
 
+            //final door triggers special event
             if (isFinalDoor)
             {
                 finalDoor.OnFinalStand();
                 GameplayManager.Instance.WinGame(true);
                 return;
             }
-
+            
             if (!_isUnlocked)
             {
                 audioSource.PlayOneShot(unlockDoor);

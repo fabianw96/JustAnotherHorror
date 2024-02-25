@@ -16,6 +16,7 @@ namespace UI.Panels.Scripts
 
         private void OpenSettings()
         {
+            GameManager.Instance.isExtraMenu = true;
             GameManager.Instance.SwitchMenu();
         }
     }

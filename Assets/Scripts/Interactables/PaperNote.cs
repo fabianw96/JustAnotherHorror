@@ -25,6 +25,7 @@ namespace Interactables
             {
                 canvas.enabled = !canvas.enabled;
                 _isReading = false;
+                GameManager.Instance.isExtraMenu = false;
                 GameManager.Instance.PauseGame(false);
             }
             canvas.transform.forward = _cameraTrans.forward;
@@ -34,6 +35,7 @@ namespace Interactables
         {
             _isReading = true;
             canvas.enabled = !canvas.enabled;
+            GameManager.Instance.isExtraMenu = true;
             GameManager.Instance.PauseGame(false);
         
             if (_hasTriggered) return;

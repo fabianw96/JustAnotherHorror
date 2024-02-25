@@ -12,14 +12,15 @@ namespace UI.Panels.Scripts
         private DropdownField _displayResolution;
         private DropdownField _quality;
         private Slider _volumeSlider;
-        private VisualElement root;
+        private VisualElement _root;
+        private float _currentVolume;
     
         private void OnEnable()
         {
-            root = GetComponent<UIDocument>().rootVisualElement;
+            _root = GetComponent<UIDocument>().rootVisualElement;
 
-            root.Q<Button>("Save").clicked += OnApply;
-            root.Q<Button>("Cancel").clicked += OnCancel;
+            _root.Q<Button>("Save").clicked += OnApply;
+            _root.Q<Button>("Cancel").clicked += OnCancel;
             InitDisplayResolution();
             InitQualitySettings();
             InitVolume();
@@ -32,29 +33,34 @@ namespace UI.Panels.Scripts
             Screen.SetResolution(resolution.width, resolution.height, true);
             QualitySettings.SetQualityLevel(_quality.index, true);
             audioMixer.SetFloat("Volume", Mathf.Log10(_volumeSlider.value) * 20);
+            GameManager.Instance.isExtraMenu = false;
             GameManager.Instance.SwitchMenu();
         }
 
         private void OnCancel()
         {
+            GameManager.Instance.isExtraMenu = false;
             GameManager.Instance.SwitchMenu();
         }
 
         private void InitVolume()
         {
-            _volumeSlider = root.Q<Slider>("Volume");
+            _volumeSlider = _root.Q<Slider>("Volume");
+            audioMixer.GetFloat("Volume", out _currentVolume);
+            _volumeSlider.value = Mathf.Pow(10, (_currentVolume / 20));
+            
         }
 
         private void InitQualitySettings()
         {
-            _quality = root.Q<DropdownField>("Quality");
+            _quality = _root.Q<DropdownField>("Quality");
             _quality.choices = QualitySettings.names.ToList();
             _quality.index = QualitySettings.GetQualityLevel();
         }
 
         private void InitDisplayResolution()
         {
-            _displayResolution = root.Q<DropdownField>("Resolution");
+            _displayResolution = _root.Q<DropdownField>("Resolution");
             _displayResolution.choices =
                 Screen.resolutions.Select(resolution => $"{resolution.width}x{resolution.height}").ToList();
             _displayResolution.index = Screen.resolutions

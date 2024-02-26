@@ -130,7 +130,7 @@ namespace PlayerScripts
 
         public void OnEscape(InputAction.CallbackContext context)
         {
-            if (!GameplayManager.Instance.IsGameOver() && context.performed)
+            if (!GameplayManager.Instance.IsGameOver() && context.performed && !GameManager.Instance.isExtraMenu)
             {
                 GameManager.Instance.PauseGame(true);
             }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 199691411645529007}
-  - component: {fileID: 2082381480762775550}
   - component: {fileID: 6217647020006380256}
   - component: {fileID: 189798460640797564}
   m_Layer: 0
@@ -35,18 +34,6 @@ Transform:
   - {fileID: 5585626461061769333}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2082381480762775550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5500833628484484258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5c2392146af6ce42a6cd8d8ada5a1ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!195 &6217647020006380256
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -88,12 +75,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  lairWaypoint: {fileID: 0}
+  finalStandWp: {fileID: 0}
+  tameTimer: 300
+  timeToNextChase: 120
   detectionRange: 5
   catchDistance: 2
   minIdleTime: 3
   maxIdleTime: 10
-  minChaseTime: 2
-  maxChaseTime: 5
   chaseSpeed: 3
   patrolSpeed: 1.5
   animator: {fileID: 6458433201123634180}

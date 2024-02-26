@@ -14,6 +14,7 @@ namespace Managers
         private List<GameObject> _interactableList;
         private bool _isGameOver;
         public bool isPaused;
+        public bool isExtraMenu;
         private GameObject _pScreen;
         private GameObject _sScreen;
         private GameObject _mScreen;

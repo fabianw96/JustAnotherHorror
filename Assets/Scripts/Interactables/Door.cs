@@ -16,7 +16,6 @@ namespace Interactables
         
         [SerializeField]private Animator animator;
         [SerializeField] private Key key;
-        [SerializeField] private Key finalKey;
         [SerializeField] private FinalDoor finalDoor;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private List<AudioClip> doorSoundsList;
@@ -30,6 +29,7 @@ namespace Interactables
         {
             _clipIndex = Random.Range(0, doorSoundsList.Count);
             Debug.Log("Interacted with: " + gameObject);
+            //if key has not been picked up, play random "rattle" sound
             if (!GameplayManager.Instance.collectedKeys.Contains(key))
             {
                 audioSource.clip = doorSoundsList[_clipIndex];
@@ -37,13 +37,14 @@ namespace Interactables
                 return;
             }
 
+            //final door triggers special event
             if (isFinalDoor)
             {
                 finalDoor.OnFinalStand();
                 GameplayManager.Instance.WinGame(true);
                 return;
             }
-
+            
             if (!_isUnlocked)
             {
                 audioSource.PlayOneShot(unlockDoor);

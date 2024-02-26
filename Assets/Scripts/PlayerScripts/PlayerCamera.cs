@@ -10,13 +10,14 @@ namespace PlayerScripts
         private float _mouseInputX;
         private float _mouseInputY;
         private float _xRotation;
+        private float _yRotation;
         private Vector3 _playerSpeed;
         private float _timer;
         private Rigidbody _playerRb;
         private float _defaultPosY;
+        private static float _mouseSens = 2f;
         [SerializeField] private GameObject playerBody;
         [SerializeField] private GameObject camHolder;
-        [SerializeField] private float mouseSens = 50f;
         [SerializeField] private float bobSpeed;
         [SerializeField] private float bobHeight;
 
@@ -47,19 +48,28 @@ namespace PlayerScripts
         private void LateUpdate()
         {
             if (GameManager.Instance.isPaused || GameplayManager.Instance.IsGameOver()) return;
-            Vector3 playerRotation = Vector3.up * (_mouseInputX * mouseSens);
-            playerBody.transform.Rotate(playerRotation);
-        
-            _xRotation -= _mouseInputY * mouseSens;
+            _yRotation += _mouseInputX * Time.deltaTime * _mouseSens;
+            _xRotation -= _mouseInputY * Time.deltaTime * _mouseSens;
             _xRotation = Mathf.Clamp(_xRotation, -90, 90);
         
-            transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+            camHolder.transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+            playerBody.transform.localRotation = Quaternion.Euler(0, _yRotation, 0);
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
             _mouseInputX = context.ReadValue<Vector2>().x;
             _mouseInputY = context.ReadValue<Vector2>().y;
+        }
+
+        public static float GetMouseSens()
+        {
+            return _mouseSens;
+        }
+
+        public static void SetMouseSens(float value)
+        {
+            _mouseSens = value;
         }
     }
 }

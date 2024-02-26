@@ -9,6 +9,10 @@ namespace Enemy
         [SerializeField] private List<AudioClip> clipList;
         private AudioClip _clip;
         
+        /// <summary>
+        /// Public method plays random footstep sound out of a list of audio clips.
+        /// Is public so it can be used in animation event.
+        /// </summary>
         public void PlayFootsteps()
         {
             _clip = clipList[Random.Range(0, clipList.Count)];

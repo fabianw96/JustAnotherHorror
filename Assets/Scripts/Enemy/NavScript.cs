@@ -51,11 +51,11 @@ namespace Enemy
         private float _distanceToPlayer;
         private bool _isPlayerHidden;
         
-
         private readonly int _speedHash = Animator.StringToHash("Speed");
 
         private void Awake()
         {
+            //determine layer from layermask
             _playerLayer = LayerMask.NameToLayer("Player");
             _isPatrolling = true;
             _currentDest = waypoints[Random.Range(0, waypoints.Count)];
@@ -70,6 +70,7 @@ namespace Enemy
             Vector3 toPlayer = _playerPosition - transform.position;
             EnemyAnimationState();
 
+            //tametimer is the time counting down to a forced chase
             if (_isTimeTicking)
             {
                 tameTimer -= Time.deltaTime;
@@ -81,8 +82,10 @@ namespace Enemy
                 MoveToPlayer();
             }
             
+            //make it so enemy can't see beyond a certain distance, player only "visible" when on correct layer and infront of enemy
             if (_distanceToPlayer <= detectionRange && player.layer == _playerLayer && Vector3.Dot(forward, toPlayer) > 0)
             {
+                //eagent can't raycast through objects
                 if (!agent.Raycast(player.transform.position, out _hit))
                 {
                     MoveToPlayer();
@@ -96,12 +99,14 @@ namespace Enemy
                 agent.destination = _dest;
                 agent.speed = chaseSpeed;
                 float distance = Vector3.Distance(_dest, agent.transform.position);
-
+                
+                //enemy walk to last known player position and waits
                 if (player.layer != _playerLayer && !_isPlayerHidden && agent.stoppingDistance <= HiddenStoppingDistance)
                 {
                     StartCoroutine(StandStill());
                 }
                 
+                //if player is caught game over
                 if (distance <= catchDistance && player.layer == _playerLayer)
                 {
                     _isChasing = false;
@@ -112,6 +117,7 @@ namespace Enemy
 
             if (_isPatrolling)
             {
+                // agent generates random location and walks there, idles and then repeat
                 _dest = _currentDest.position;
                 agent.destination = _dest;
                 agent.speed = patrolSpeed;
@@ -127,8 +133,6 @@ namespace Enemy
             if (_isReturningToLair)
             {
                 if (!(agent.remainingDistance <= 1f)) return;
-                
-                Debug.Log("CLOSE");
                 StartCoroutine(StandStill());
             }
         }
@@ -140,6 +144,7 @@ namespace Enemy
 
         public void MoveToLair()
         {
+            //called when player enters lair
             StopAllCoroutines();
             _isTimeTicking = false;
             _isChasing = false;
@@ -150,13 +155,14 @@ namespace Enemy
 
         public void StartFinalStand()
         {
+            //called when player interacts with door after final key is picked
             StopAllCoroutines();
             _isTimeTicking = false;
-            _isChasing = false;
             _isPatrolling = false;
             agent.Warp(finalStandWp.position);
             agent.destination = _playerPosition;
             agent.speed = chaseSpeed;
+            _isChasing = true;
         }
 
         private void MoveToPlayer()
@@ -179,10 +185,8 @@ namespace Enemy
         private IEnumerator StandStill()
         {
             _isPlayerHidden = true;
-            Debug.Log("Pre-Wait");
             _isReturningToLair = false;
             yield return new WaitForSeconds(5);
-            Debug.Log("Post-Wait");
             agent.stoppingDistance = DefaultStoppingDistance;
             _isChasing = false;
             _isPatrolling = true;

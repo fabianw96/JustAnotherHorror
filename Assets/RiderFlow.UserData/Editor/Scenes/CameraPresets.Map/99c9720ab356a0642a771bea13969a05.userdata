@@ -12,5 +12,19 @@
     "directionW": 0.9682207,
     "zoom": 9.12025,
     "cameraMode": 2
+  },
+  "d5a6ae5ee071d4149abd482968a5c35a": {
+    "sceneGuid": "99c9720ab356a0642a771bea13969a05",
+    "uniqueCameraId": "d5a6ae5ee071d4149abd482968a5c35a",
+    "name": "SS",
+    "pointX": 19.5287018,
+    "pointY": 26.3507729,
+    "pointZ": -3.13402081,
+    "directionX": 0.351261824,
+    "directionY": 0.00326933758,
+    "directionZ": -0.000576931343,
+    "directionW": 0.9365758,
+    "zoom": 9.12025,
+    "cameraMode": 2
   }
 }

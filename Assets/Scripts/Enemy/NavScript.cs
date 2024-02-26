@@ -51,7 +51,6 @@ namespace Enemy
         private float _distanceToPlayer;
         private bool _isPlayerHidden;
         
-
         private readonly int _speedHash = Animator.StringToHash("Speed");
 
         private void Awake()

@@ -12,6 +12,7 @@ namespace UI.Panels.Scripts
         [SerializeField] private AudioMixer audioMixer;
         private DropdownField _displayResolution;
         private DropdownField _quality;
+        private Toggle _fullscreenToggle;
         private Slider _volumeSlider;
         private Slider _sensSlider;
         private VisualElement _root;
@@ -33,7 +34,7 @@ namespace UI.Panels.Scripts
         private void OnApply()
         {
             var resolution = Screen.resolutions[_displayResolution.index];
-            Screen.SetResolution(resolution.width, resolution.height, true);
+            Screen.SetResolution(resolution.width, resolution.height, _fullscreenToggle.value);
             QualitySettings.SetQualityLevel(_quality.index, true);
             PlayerCamera.SetMouseSens(_sensSlider.value);
             audioMixer.SetFloat("Volume", Mathf.Log10(_volumeSlider.value) * 20);
@@ -69,6 +70,8 @@ namespace UI.Panels.Scripts
 
         private void InitDisplayResolution()
         {
+            _fullscreenToggle = _root.Q<Toggle>("Fullscreen");
+            _fullscreenToggle.value = Screen.fullScreen;
             _displayResolution = _root.Q<DropdownField>("Resolution");
             _displayResolution.choices =
                 Screen.resolutions.Select(resolution => $"{resolution.width}x{resolution.height}").ToList();

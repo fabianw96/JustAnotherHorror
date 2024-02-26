@@ -10,11 +10,12 @@ namespace PlayerScripts
         private float _mouseInputX;
         private float _mouseInputY;
         private float _xRotation;
+        private float _yRotation;
         private Vector3 _playerSpeed;
         private float _timer;
         private Rigidbody _playerRb;
         private float _defaultPosY;
-        private static float _mouseSens = 0.5f;
+        private static float _mouseSens = 2f;
         [SerializeField] private GameObject playerBody;
         [SerializeField] private GameObject camHolder;
         [SerializeField] private float bobSpeed;
@@ -47,13 +48,12 @@ namespace PlayerScripts
         private void LateUpdate()
         {
             if (GameManager.Instance.isPaused || GameplayManager.Instance.IsGameOver()) return;
-            Vector3 playerRotation = Vector3.up * (_mouseInputX * _mouseSens);
-            playerBody.transform.Rotate(playerRotation);
-        
-            _xRotation -= _mouseInputY * _mouseSens;
+            _yRotation += _mouseInputX * Time.deltaTime * _mouseSens;
+            _xRotation -= _mouseInputY * Time.deltaTime * _mouseSens;
             _xRotation = Mathf.Clamp(_xRotation, -90, 90);
         
-            transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+            camHolder.transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+            playerBody.transform.localRotation = Quaternion.Euler(0, _yRotation, 0);
         }
 
         public void OnLook(InputAction.CallbackContext context)

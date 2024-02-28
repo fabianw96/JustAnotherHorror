@@ -15,7 +15,7 @@ namespace UI.Panels.Scripts
             root.Q<Button>("Quit").clicked += Application.Quit;
             
             #if UNITY_EDITOR
-            root.Q<Button>("Quit").clicked += QuitEditor;
+            root.Q<Button>("Quit").clicked += EditorQuitScript.QuitEditor;
             #endif
         }
 
@@ -23,11 +23,6 @@ namespace UI.Panels.Scripts
         {
             GameManager.Instance.isExtraMenu = true;
             GameManager.Instance.SwitchMenu();
-        }
-
-        private static void QuitEditor()
-        {
-            EditorApplication.isPlaying = false;
         }
     }
 }

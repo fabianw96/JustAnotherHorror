@@ -18,12 +18,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 1706.6667
+    width: 1706.6666
     height: 926
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 17568
+  controlID: 452
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,12 +143,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1706.6667
+    width: 1706.6666
     height: 926
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 17569
+  controlID: 453
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -213,9 +213,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 92140500
-      m_LastClickedID: 332946
-      m_ExpandedIDs: 8cf2fcff6e0efdff060ffdffd811fdffac13fdff1e37fdffca3ffdff58dcffffeedcfffffadcffff0ee2ffff1ae9ffff22e9ffffdaedffffd8f2ffffe8f5ffff76fafffffc750000ea7800000c80000050800000348400001a890000d68a00002e8d0000488d00004ae1040008f304002ef5040030fc040014fe04000403050046090500f40c0500e40d0500380f050092140500
+      m_SelectedIDs: d6950000
+      m_LastClickedID: 0
+      m_ExpandedIDs: fec2ffff14cefffff6faffff8a9b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 17493
+  controlID: 454
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -283,8 +283,8 @@ MonoBehaviour:
     y: 0
     width: 1099.3333
     height: 566.6667
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 8}
@@ -293,7 +293,7 @@ MonoBehaviour:
   - {fileID: 10}
   - {fileID: 11}
   m_Selected: 1
-  m_LastSelected: 0
+  m_LastSelected: 3
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -716,9 +716,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -5.9017005, y: 2.6281595, z: 2.65334}
+    m_Target: {x: -3.90609, y: 5.0757885, z: 4.4916897}
     speed: 2
-    m_Value: {x: -5.9017005, y: 2.6281595, z: 2.65334}
+    m_Value: {x: -3.90609, y: 5.0757885, z: 4.4916897}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -764,9 +764,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.025969664, y: 0.8941738, z: -0.048656233, w: -0.4449355}
+    m_Target: {x: 0.12323744, y: 0.33250087, z: -0.04532253, w: 0.93422157}
     speed: 2
-    m_Value: {x: -0.02596244, y: 0.8939252, z: -0.048642714, w: -0.4448118}
+    m_Value: {x: 0.12320243, y: 0.3324064, z: -0.04530965, w: 0.93395615}
   m_Size:
     m_Target: 1.0862781
     speed: 2
@@ -1029,7 +1029,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Interactables
+    - Assets/UI/Panels/UXML
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1037,16 +1037,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 74
   m_LastFolders:
-  - Assets/Prefabs/Interactables
+  - Assets/UI/Panels/UXML
   m_LastFoldersGridSize: 74
   m_LastProjectPath: C:\Users\wittg\Documents\SAE\Projekte\JustAnotherHorror
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 180}
-    m_SelectedIDs: f0850300
-    m_LastClickedID: 230896
-    m_ExpandedIDs: 000000008499000086990000889900008a9900008c9900008e99000090990000929900009499000096990000989900009a9900009c9900009e990000a0990000a2990000a4990000a6990000a8990000aa9900008a9a000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 420}
+    m_SelectedIDs: 069b0000
+    m_LastClickedID: 39686
+    m_ExpandedIDs: 0000000026990000289900002a9900002c9900002e99000030990000329900003499000036990000389900003a9900003c9900003e99000040990000429900004499000046990000489900004a9900004c990000c09a0000c29a0000ca9a000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1074,7 +1074,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000008499000086990000889900008a9900008c9900008e99000090990000929900009499000096990000989900009a9900009c9900009e990000a0990000a2990000a4990000a6990000a8990000aa99000000ca9a3bffffff7f
+    m_ExpandedIDs: 0000000026990000289900002a9900002c9900002e99000030990000329900003499000036990000389900003a9900003c9900003e99000040990000429900004499000046990000489900004a9900004c990000c09a0000c29a0000ca9a000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1099,9 +1099,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 92140500
-    m_LastClickedInstanceID: 332946
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: d6950000
+    m_LastClickedInstanceID: 38358
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300002e6000000a5f0000905e0000686000000000000066cd0000967200001005030060870000a2890000aa9300001e990000869b00003c7e0000e49500007e96000016960000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1167,7 +1167,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 331924
+  m_LastSelectedObjectID: 39868
 --- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1403,7 +1403,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1386.6666
     y: 0
-    width: 320.00012
+    width: 320
     height: 926
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
@@ -1436,7 +1436,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1386.6667
     y: 72.66667
-    width: 319.00012
+    width: 319
     height: 905
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1455,7 +1455,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 270
+  m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

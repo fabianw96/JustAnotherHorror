@@ -16,6 +16,10 @@ namespace UI.Panels.Scripts
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             root.Q<Button>("MainMenu").clicked += () => SceneLoader.Load(SceneLoader.Scenes.MainMenu, LoadSceneMode.Single);
             root.Q<Button>("Quit").clicked += Application.Quit;
+            
+            #if UNITY_EDITOR
+            root.Q<Button>("Quit").clicked += EditorQuitScript.QuitEditor;
+            #endif      
         }
     }
 }

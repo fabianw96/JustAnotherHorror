@@ -55,14 +55,14 @@ namespace Enemy
 
         private void Awake()
         {
-            //determine layer from layermask
+            //determine layer from layer mask
             _playerLayer = LayerMask.NameToLayer("Player");
             _isPatrolling = true;
             _currentDest = waypoints[Random.Range(0, waypoints.Count)];
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             _playerPosition = player.transform.position;
             _distanceToPlayer = Vector3.Distance(_playerPosition, transform.position);
@@ -70,7 +70,7 @@ namespace Enemy
             Vector3 toPlayer = _playerPosition - transform.position;
             EnemyAnimationState();
 
-            //tametimer is the time counting down to a forced chase
+            //tame timer is the time counting down to a forced chase
             if (_isTimeTicking)
             {
                 tameTimer -= Time.deltaTime;
@@ -82,10 +82,10 @@ namespace Enemy
                 MoveToPlayer();
             }
             
-            //make it so enemy can't see beyond a certain distance, player only "visible" when on correct layer and infront of enemy
+            //make it so enemy can't see beyond a certain distance, player only "visible" when on correct layer and in front of enemy
             if (_distanceToPlayer <= detectionRange && player.layer == _playerLayer && Vector3.Dot(forward, toPlayer) > 0)
             {
-                //eagent can't raycast through objects
+                //agent can't raycast through objects
                 if (!agent.Raycast(player.transform.position, out _hit))
                 {
                     MoveToPlayer();
@@ -111,6 +111,8 @@ namespace Enemy
                 {
                     _isChasing = false;
                     _isPatrolling = true;
+                    //player fade to black, sounds, restart & save progress to last key
+                    //
                     GameplayManager.Instance.GameOver(true);
                 }
             }

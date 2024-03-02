@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
-namespace UI.Panels.Scripts
+namespace UI
 {
     public class GameWonScreen : MonoBehaviour
     {

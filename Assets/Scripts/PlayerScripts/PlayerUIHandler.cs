@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using Interfaces;
 using Managers;
-using PlayerScripts;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace UI
+namespace PlayerScripts
 {
     public class PlayerUIHandler : MonoBehaviour
     {
@@ -65,7 +64,7 @@ namespace UI
             switch (_raycastHit.transform.gameObject.tag)
             {
                 case "Locker":
-                    if (gameObject.layer == _hiddenLayer)
+                    if (this.gameObject.layer == _hiddenLayer)
                     {
                         _hudRoot.Q<Label>("InteractLabel").text = "LMB to unhide";
                         break;

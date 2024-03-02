@@ -43,11 +43,7 @@ namespace Enemy
         
         private NavMeshHit _hit;
         private int _rndNum;
-        private bool _isPatrolling;
-        private bool _isChasing;
-        private bool _isReturningToLair;
         private float _idleTime;
-        private float _chaseTime;
         private Vector3 _dest;
         private float _distanceToPlayer;
         private bool _isPlayerHidden;
@@ -56,18 +52,20 @@ namespace Enemy
         {
             //determine layer from layer mask
             _playerLayer = LayerMask.NameToLayer("Player");
-            _isPatrolling = true;
+            enemyState.ChangeState(EState.Patrolling);
             _currentDest = waypoints[Random.Range(0, waypoints.Count)];
         }
 
         // Update is called once per frame
         private void Update()
         {
+            //track current player position and distance to the player
             _playerPosition = player.transform.position;
             _distanceToPlayer = Vector3.Distance(_playerPosition, transform.position);
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 toPlayer = _playerPosition - transform.position;
             
+            //set the current animationstate
             enemyAnimation.UpdateAnimationState(agent.velocity.magnitude);
             
             CheckTameTimer();
@@ -79,7 +77,8 @@ namespace Enemy
         }
         private void ReturnToLairCheck()
         {
-            if (!_isReturningToLair)
+            //enemy runs back to his lair
+            if (enemyState.GetCurrentState() != EState.Lair)
                 return;
             
             if (!(agent.remainingDistance <= 1f)) return;
@@ -87,7 +86,7 @@ namespace Enemy
         }
         private void CheckTameTimer()
         {
-            //tame timer is the time counting down to a forced chase
+            //time counting down to a forced chase
             if (_isTimeTicking)
             {
                 tameTimer -= Time.deltaTime;
@@ -113,7 +112,7 @@ namespace Enemy
         }
         private void EnemyChase()
         {
-            if (!_isChasing)
+            if (enemyState.GetCurrentState() != EState.Chasing)
                 return;
             
             _isTimeTicking = false;
@@ -132,23 +131,22 @@ namespace Enemy
             if (!(distance <= catchDistance) || player.layer != _playerLayer)
                 return;
             
-            _isChasing = false;
-            _isPatrolling = true;
+            enemyState.ChangeState(EState.Patrolling);
             //player fade to black, sounds, restart & save progress to last key
             GameplayManager.Instance.GameOver(true);
         }
         private void EnemyPatrol()
         {
-            if (!_isPatrolling)
+            if (enemyState.GetCurrentState() != EState.Patrolling)
                 return;
             
             // agent generates random location and walks there, idles and then repeat
             _dest = _currentDest.position;
             agent.destination = _dest;
             agent.speed = patrolSpeed;
-            if (agent.remainingDistance <= 1f && _isPatrolling)
+            if (agent.remainingDistance <= 1f && enemyState.GetCurrentState() == EState.Patrolling)
             {
-                _isPatrolling = false;
+                enemyState.ChangeState(EState.Idle);
                 agent.speed = 0;
                 StopCoroutine(StayIdle());
                 StartCoroutine(StayIdle());
@@ -160,30 +158,26 @@ namespace Enemy
             //called when player enters lair
             StopAllCoroutines();
             _isTimeTicking = false;
-            _isChasing = false;
-            _isPatrolling = false;
-            _isReturningToLair = true;
+            enemyState.ChangeState(EState.Lair);
             agent.destination = lairWaypoint.position;
         }
 
         public void StartFinalStand()
         {
-            //called when player interacts with door after final key is picked
+            //called when player interacts with door after final key is picked up
             StopAllCoroutines();
             _isTimeTicking = false;
-            _isPatrolling = false;
             agent.Warp(finalStandWp.position);
             agent.destination = _playerPosition;
             agent.speed = chaseSpeed;
-            _isChasing = true;
+            enemyState.ChangeState(EState.Chasing);
         }
 
         private void MoveToPlayer()
         {
             StopAllCoroutines();
             _isPlayerHidden = false;
-            _isPatrolling = false;
-            _isChasing = true;
+            enemyState.ChangeState(EState.Chasing);
             tameTimer = timeToNextChase;
         }
 
@@ -191,18 +185,16 @@ namespace Enemy
         {
             _idleTime = Random.Range(minIdleTime, maxIdleTime);
             yield return new WaitForSeconds(_idleTime);
-            _isPatrolling = true;
+            enemyState.ChangeState(EState.Patrolling);
             _currentDest = waypoints[Random.Range(0, waypoints.Count)];
         }
 
         private IEnumerator StandStill()
         {
             _isPlayerHidden = true;
-            _isReturningToLair = false;
             yield return new WaitForSeconds(5);
             agent.stoppingDistance = DefaultStoppingDistance;
-            _isChasing = false;
-            _isPatrolling = true;
+            enemyState.ChangeState(EState.Patrolling);
             _isTimeTicking = true;
         }
     }

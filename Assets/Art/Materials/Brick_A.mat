@@ -189,9 +189,9 @@ Material:
     - Vector1_6c3f661a98e04de1ac634d3e8fbfba2a: 1
     - Vector1_8866bec10e134bc2969ce9655383164c: 1
     - Vector1_b06f5fef071d41889148733207a46fcc: 0.5
-    - Vector1_b879f851f8e4453783e1db5a6b3b949f: 1
+    - Vector1_b879f851f8e4453783e1db5a6b3b949f: 0.1
     - Vector1_b88089fea9cc48de897047ce2f13cc74: 1
-    - Vector1_ce27b7fe1242434d9cdecbc18536bce4: 0.5
+    - Vector1_ce27b7fe1242434d9cdecbc18536bce4: 0.8
     - Vector1_e092f1ac1a6241739ddb03abdf1519de: 0
     - Vector1_ed1998edc58541a0bca57bb6261612c0: 0
     - _AORemapMax: 1
@@ -331,7 +331,8 @@ Material:
         a: 0}
     - Color_6e6a298527604413a6113bd9ae9cfc07: {r: 0.8584906, g: 0.22407135, b: 0.22407135,
         a: 0}
-    - Color_80f1e318d1bb4ac19960f39e5d51200e: {r: 1, g: 1, b: 1, a: 0}
+    - Color_80f1e318d1bb4ac19960f39e5d51200e: {r: 0.29799998, g: 0.29799998, b: 0.29799998,
+        a: 0}
     - Color_c617285b68b74603a782762d06abb635: {r: 0.17147255, g: 0.30524716, b: 0.8018868,
         a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

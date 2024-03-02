@@ -13,6 +13,7 @@ namespace UI.Panels.Scripts
         private DropdownField _displayResolution;
         private DropdownField _quality;
         private Toggle _fullscreenToggle;
+        private Toggle _staminaBarToggle;
         private Slider _volumeSlider;
         private Slider _sensSlider;
         private VisualElement _root;
@@ -21,13 +22,14 @@ namespace UI.Panels.Scripts
         private void OnEnable()
         {
             _root = GetComponent<UIDocument>().rootVisualElement;
-
+            
             _root.Q<Button>("Save").clicked += OnApply;
             _root.Q<Button>("Cancel").clicked += OnCancel;
             InitDisplayResolution();
             InitQualitySettings();
             InitVolume();
             InitSens();
+            InitShowStaminaBar();
         }
     
 
@@ -37,6 +39,7 @@ namespace UI.Panels.Scripts
             Screen.SetResolution(resolution.width, resolution.height, _fullscreenToggle.value);
             QualitySettings.SetQualityLevel(_quality.index, true);
             PlayerCamera.SetMouseSens(_sensSlider.value);
+            PlayerUIHandler.StaminaBarEnabled = _staminaBarToggle.value;
             audioMixer.SetFloat("Volume", Mathf.Log10(_volumeSlider.value) * 20);
             GameManager.Instance.isExtraMenu = false;
             GameManager.Instance.SwitchMenu();
@@ -80,6 +83,12 @@ namespace UI.Panels.Scripts
                 .First((value) => value.resolution.width == Screen.currentResolution.width &&
                                   value.resolution.height == Screen.currentResolution.height)
                 .index;
+        }
+
+        private void InitShowStaminaBar()
+        {
+            _staminaBarToggle = _root.Q<Toggle>("StaminaBarToggle");
+            _staminaBarToggle.value = PlayerUIHandler.StaminaBarEnabled;
         }
     }
 }

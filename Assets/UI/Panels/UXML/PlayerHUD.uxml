@@ -5,5 +5,5 @@
             <ui:Label tabindex="-1" text="LMB to Interact" parse-escape-sequences="true" display-tooltip-when-elided="true" name="InteractLabel" style="-unity-text-align: upper-left; white-space: nowrap; color: rgb(255, 255, 255); font-size: 32px; -unity-font: url(&apos;project://database/Assets/Art/Font/Kobajeon-w18YP.otf?fileID=12800000&amp;guid=0a5f675297fe55a4280d95d0853a6aff&amp;type=3#Kobajeon-w18YP&apos;); -unity-font-definition: initial;" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:ProgressBar value="2" high-value="2" name="StaminaBar" style="position: absolute; height: 75px; width: 540px; rotate: -90deg; transform-origin: center; align-self: flex-start; justify-content: center; top: 540px; left: -220px; opacity: 0.02;" />
+    <ui:ProgressBar value="2" high-value="2" name="StaminaBar" style="position: absolute; width: 540px; align-self: flex-start; justify-content: center; top: auto; left: 35%; opacity: 0.01; bottom: auto; display: flex; visibility: visible;" />
 </ui:UXML>

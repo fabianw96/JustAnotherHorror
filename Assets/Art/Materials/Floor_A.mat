@@ -178,8 +178,8 @@ Material:
     - Boolean_1528e353445e4241bed245e515d1ab02: 1
     - Boolean_907cf51abbcb4291928850a465cad51f: 0
     - Vector1_6c3f661a98e04de1ac634d3e8fbfba2a: 1
-    - Vector1_b879f851f8e4453783e1db5a6b3b949f: 1
-    - Vector1_ce27b7fe1242434d9cdecbc18536bce4: 0.33333334
+    - Vector1_b879f851f8e4453783e1db5a6b3b949f: 0
+    - Vector1_ce27b7fe1242434d9cdecbc18536bce4: 1
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -308,7 +308,8 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - Color_80f1e318d1bb4ac19960f39e5d51200e: {r: 1, g: 1, b: 1, a: 0}
+    - Color_80f1e318d1bb4ac19960f39e5d51200e: {r: 0.6698113, g: 0.6698113, b: 0.6698113,
+        a: 0.8862745}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

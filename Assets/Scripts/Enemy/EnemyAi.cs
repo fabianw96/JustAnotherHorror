@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Enemy
 {
-    public class NavScript : MonoBehaviour
+    public class EnemyAi : MonoBehaviour
     {
         [Header("Transforms")]
         private Transform _currentDest;
@@ -32,9 +32,10 @@ namespace Enemy
         [Header("Speed")] 
         [SerializeField] private float chaseSpeed;
         [SerializeField] private float patrolSpeed;
-
+        
         [Header("Components")]
-        [SerializeField] private Animator animator;
+        [SerializeField] private EnemyAnimation enemyAnimation;
+        [SerializeField] private EnemyState enemyState;
         [SerializeField] private NavMeshAgent agent;
 
         [Header("Animations")] 
@@ -50,8 +51,6 @@ namespace Enemy
         private Vector3 _dest;
         private float _distanceToPlayer;
         private bool _isPlayerHidden;
-        
-        private readonly int _speedHash = Animator.StringToHash("Speed");
 
         private void Awake()
         {
@@ -68,80 +67,92 @@ namespace Enemy
             _distanceToPlayer = Vector3.Distance(_playerPosition, transform.position);
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 toPlayer = _playerPosition - transform.position;
-            EnemyAnimationState();
+            
+            enemyAnimation.UpdateAnimationState(agent.velocity.magnitude);
+            
+            CheckTameTimer();
+            FindPlayerInFront(forward, toPlayer);
+            EnemyChase();
+            EnemyPatrol();
 
+            ReturnToLairCheck();
+        }
+        private void ReturnToLairCheck()
+        {
+            if (!_isReturningToLair)
+                return;
+            
+            if (!(agent.remainingDistance <= 1f)) return;
+            StartCoroutine(StandStill());
+        }
+        private void CheckTameTimer()
+        {
             //tame timer is the time counting down to a forced chase
             if (_isTimeTicking)
             {
                 tameTimer -= Time.deltaTime;
             }
 
-            if (tameTimer <= 0f)
+            if (!(tameTimer <= 0f))
+                return;
+            
+            _isTimeTicking = false;
+            MoveToPlayer();
+        }
+        private void FindPlayerInFront(Vector3 forward, Vector3 toPlayer)
+        {
+            // enemy can't see beyond a certain distance, player only "visible" when on correct layer and in front of enemy
+            if (!(_distanceToPlayer <= detectionRange) || player.layer != _playerLayer || !(Vector3.Dot(forward, toPlayer) > 0))
+                return;
+            
+            //agent can't raycast through objects
+            if (!agent.Raycast(player.transform.position, out _hit))
             {
-                _isTimeTicking = false;
                 MoveToPlayer();
             }
+        }
+        private void EnemyChase()
+        {
+            if (!_isChasing)
+                return;
             
-            //make it so enemy can't see beyond a certain distance, player only "visible" when on correct layer and in front of enemy
-            if (_distanceToPlayer <= detectionRange && player.layer == _playerLayer && Vector3.Dot(forward, toPlayer) > 0)
-            {
-                //agent can't raycast through objects
-                if (!agent.Raycast(player.transform.position, out _hit))
-                {
-                    MoveToPlayer();
-                }
-            }
+            _isTimeTicking = false;
+            _dest = player.transform.position;
+            agent.destination = _dest;
+            agent.speed = chaseSpeed;
+            float distance = Vector3.Distance(_dest, agent.transform.position);
 
-            if (_isChasing)
+            //enemy walk to last known player position and waits
+            if (player.layer != _playerLayer && !_isPlayerHidden && agent.stoppingDistance <= HiddenStoppingDistance)
             {
-                _isTimeTicking = false;
-                _dest = player.transform.position;
-                agent.destination = _dest;
-                agent.speed = chaseSpeed;
-                float distance = Vector3.Distance(_dest, agent.transform.position);
-                
-                //enemy walk to last known player position and waits
-                if (player.layer != _playerLayer && !_isPlayerHidden && agent.stoppingDistance <= HiddenStoppingDistance)
-                {
-                    StartCoroutine(StandStill());
-                }
-                
-                //if player is caught game over
-                if (distance <= catchDistance && player.layer == _playerLayer)
-                {
-                    _isChasing = false;
-                    _isPatrolling = true;
-                    //player fade to black, sounds, restart & save progress to last key
-                    //
-                    GameplayManager.Instance.GameOver(true);
-                }
-            }
-
-            if (_isPatrolling)
-            {
-                // agent generates random location and walks there, idles and then repeat
-                _dest = _currentDest.position;
-                agent.destination = _dest;
-                agent.speed = patrolSpeed;
-                if (agent.remainingDistance <= 1f && _isPatrolling) 
-                {
-                    _isPatrolling = false;
-                    agent.speed = 0;
-                    StopCoroutine(StayIdle());
-                    StartCoroutine(StayIdle());
-                }
-            }
-
-            if (_isReturningToLair)
-            {
-                if (!(agent.remainingDistance <= 1f)) return;
                 StartCoroutine(StandStill());
             }
-        }
 
-        private void EnemyAnimationState()
+            //if player is caught game over
+            if (!(distance <= catchDistance) || player.layer != _playerLayer)
+                return;
+            
+            _isChasing = false;
+            _isPatrolling = true;
+            //player fade to black, sounds, restart & save progress to last key
+            GameplayManager.Instance.GameOver(true);
+        }
+        private void EnemyPatrol()
         {
-            animator.SetFloat(_speedHash, agent.velocity.magnitude);
+            if (!_isPatrolling)
+                return;
+            
+            // agent generates random location and walks there, idles and then repeat
+            _dest = _currentDest.position;
+            agent.destination = _dest;
+            agent.speed = patrolSpeed;
+            if (agent.remainingDistance <= 1f && _isPatrolling)
+            {
+                _isPatrolling = false;
+                agent.speed = 0;
+                StopCoroutine(StayIdle());
+                StartCoroutine(StayIdle());
+            }
         }
 
         public void MoveToLair()

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace UI.Panels.Scripts
+namespace UI
 {
     public class MainMenuPresenter : MonoBehaviour
     {

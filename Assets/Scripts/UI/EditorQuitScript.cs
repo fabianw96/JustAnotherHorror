@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace UI.Panels.Scripts
+namespace UI
 {
     public class EditorQuitScript : MonoBehaviour
     {

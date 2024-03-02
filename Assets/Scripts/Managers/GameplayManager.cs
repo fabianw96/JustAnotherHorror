@@ -24,7 +24,6 @@ namespace Managers
                 return;
             }
             Instance = this;
-            // DontDestroyOnLoad(gameObject);
         }
 
         private void Update()
@@ -64,7 +63,7 @@ namespace Managers
         {
             _hasWon = state;
         }
-
+        
         public bool HasEnded()
         {
             return _hasEnded;

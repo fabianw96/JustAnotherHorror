@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+namespace Managers
 {
-    public static AudioManager Instance;
-    [SerializeField] public AudioSource playerAudio;
-
-    private void Awake()
+    public class AudioManager : MonoBehaviour
     {
-        //singleton
-        if (Instance != null && Instance != this)    
+        public static AudioManager Instance;
+        [SerializeField] public AudioSource playerAudio;
+
+        private void Awake()
         {
-            Destroy(this.gameObject);
-            return;
+            //singleton
+            if (Instance != null && Instance != this)    
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
-        Instance = this;
-        DontDestroyOnLoad(this.gameObject);
     }
 }

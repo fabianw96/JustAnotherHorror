@@ -7,7 +7,8 @@ namespace Enemy
         Default = 0,
         Idle,
         Patrolling,
-        Chasing
+        Chasing,
+        Lair
     }
     
     public class EnemyState : MonoBehaviour

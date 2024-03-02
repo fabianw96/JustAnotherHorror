@@ -84684,6 +84684,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 352063451}
+--- !u!114 &1939435376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939435371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595d709dfdfea2d458bd2a358d918310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1940787975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93205,6 +93217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 189798460640797564, guid: 452d5b3ad51189b47b9947a1baff8d4a,
         type: 3}
+      propertyPath: enemyState
+      value: 
+      objectReference: {fileID: 1939435376}
+    - target: {fileID: 189798460640797564, guid: 452d5b3ad51189b47b9947a1baff8d4a,
+        type: 3}
       propertyPath: maxIdleTime
       value: 6
       objectReference: {fileID: 0}
@@ -93831,7 +93848,7 @@ PrefabInstance:
     - target: {fileID: 5500833628484484258, guid: 452d5b3ad51189b47b9947a1baff8d4a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5619577546064768892, guid: 452d5b3ad51189b47b9947a1baff8d4a,
         type: 3}
@@ -94171,6 +94188,10 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 369964621}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5500833628484484258, guid: 452d5b3ad51189b47b9947a1baff8d4a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1939435376}
     - targetCorrespondingSourceObject: {fileID: 5500833628484484258, guid: 452d5b3ad51189b47b9947a1baff8d4a,
         type: 3}
       insertIndex: -1

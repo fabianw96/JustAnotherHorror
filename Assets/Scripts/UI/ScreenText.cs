@@ -1,8 +1,7 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
-namespace UI.Panels.Scripts
+namespace UI
 {
     public class ScreenText : MonoBehaviour
     {

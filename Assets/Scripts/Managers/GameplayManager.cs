@@ -9,6 +9,7 @@ namespace Managers
     {
         [SerializeField] private ScriptableEvent playerDeathEvent;
         [SerializeField] private ScriptableEvent playerWinEvent;
+        [SerializeField] private int playerLives = 2;
         public static GameplayManager Instance;
         public List<Key> collectedKeys;
         private bool _isGameOver;

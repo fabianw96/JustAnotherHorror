@@ -36,7 +36,7 @@ namespace PlayerScripts
             }
         }
         
-        public void HighlightInteraction(Camera playerCamera)
+        public void EnableInteractionUI(Camera playerCamera)
         {
             if (playerCamera == null || !Physics.Raycast(playerCamera.ScreenPointToRay(Input.mousePosition),
                     out _raycastHit,

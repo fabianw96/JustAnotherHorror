@@ -20,6 +20,11 @@ namespace Enemy
             _currenState = state;
         }
         
+        public void ChangeStateInt(int stateInt)
+        {
+            _currenState = (EState)stateInt;
+        }
+        
         public EState GetCurrentState()
         {
             return _currenState;

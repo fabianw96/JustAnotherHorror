@@ -59,7 +59,12 @@ namespace Interactables
             
             audioSource.Play();
             _isOpen = true;
-            animator.SetBool(_isOpenHash, _isOpen);
+            OpenDoor(_isOpen);
+        }
+
+        public void OpenDoor(bool state)
+        {
+            animator.SetBool(_isOpenHash, state);
         }
 
         public void OpenFinalDoor()

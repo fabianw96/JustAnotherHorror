@@ -16,6 +16,9 @@ namespace PlayerScripts
         private Rigidbody _rBody;
         private VisualElement _hudRoot;
         [SerializeField] private AudioClip breathClip;
+        [SerializeField] private GameObject infirm;
+
+        [SerializeField] private int playerLives = 2;
         
         [Header("UI")]
         [SerializeField] private PlayerUIHandler uiHandler;
@@ -24,7 +27,7 @@ namespace PlayerScripts
         [Header("Movement")]
         private Vector2 _inputVector;
         private Vector3 _movementVector;
-        private bool _isSprinting;
+        private bool _isSprintHeld;
         private bool _canSprint = true;
         private float _sprintTimer;
         private Camera _myCamera;
@@ -47,8 +50,23 @@ namespace PlayerScripts
 
         private void Update()
         {
-            uiHandler.HighlightInteraction(_myCamera);
+            
+            #if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                TeleportPlayer(infirm);
+            }  
+            #endif
+            
+            uiHandler.EnableInteractionUI(_myCamera);
             uiHandler.UpdateStaminaBar(_sprintTimer);
+
+            //check if player still has lives
+            if (playerLives <= 0)
+            {
+                GameplayManager.Instance.GameOver(true);
+            }
+            
             
             if (_sprintTimer <= 0f)
             {
@@ -63,8 +81,11 @@ namespace PlayerScripts
         {
             MoveCharacter();
         }
-        
-        
+
+        public void ReducePlayerLives()
+        {
+            playerLives--;
+        }
 
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -81,11 +102,12 @@ namespace PlayerScripts
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            _isSprinting = context.performed;
+            _isSprintHeld = context.performed;
         }
 
         public void OnEscape(InputAction.CallbackContext context)
         {
+            //opens escape menu when not gameover and not already in an extra menu
             if (!GameplayManager.Instance.IsGameOver() && context.performed && !GameManager.Instance.isExtraMenu)
             {
                 GameManager.Instance.PauseGame(true);
@@ -98,7 +120,7 @@ namespace PlayerScripts
             Vector3 currentVelocity = _rBody.velocity;
             Vector3 targetVelocity = new Vector3(_inputVector.x, 0f, _inputVector.y);
 
-            if (_isSprinting && _canSprint)
+            if (_isSprintHeld && _canSprint && _inputVector != Vector2.zero)
             {
                 _sprintTimer -= Time.deltaTime;
                 targetVelocity *= speed * sprintMulti;
@@ -119,16 +141,22 @@ namespace PlayerScripts
                 targetVelocity *= speed;
             }
             
-            //align direction
+            //align direction with players input
             targetVelocity = transform.TransformDirection(targetVelocity);
         
             //calculate forces
             Vector3 velocityChange = (targetVelocity - currentVelocity);
         
-            //limit force
+            //limit force applied to players movement
             velocityChange = Vector3.ClampMagnitude(velocityChange, maxForce);
 
             _rBody.AddForce(new Vector3(velocityChange.x, 0f, velocityChange.z), ForceMode.VelocityChange);
+        }
+
+        public void TeleportPlayer(GameObject position)
+        {
+            Debug.Log("Teleporting player!");
+            this.gameObject.transform.localPosition = position.transform.position;
         }
     }
     

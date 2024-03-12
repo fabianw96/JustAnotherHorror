@@ -7,7 +7,7 @@ namespace UI
     {
         public static void QuitEditor()
         {
-            EditorApplication.isPlaying = false;
+            // EditorApplication.isPlaying = false;
         } 
     }
 }

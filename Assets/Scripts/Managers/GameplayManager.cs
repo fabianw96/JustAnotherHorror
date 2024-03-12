@@ -9,11 +9,9 @@ namespace Managers
     {
         [SerializeField] private ScriptableEvent playerDeathEvent;
         [SerializeField] private ScriptableEvent playerWinEvent;
-        [SerializeField] private int playerLives = 2;
         public static GameplayManager Instance;
         public List<Key> collectedKeys;
         private bool _isGameOver;
-        private bool _hasEnded;
         private bool _hasWon;
         private float _endTimer = 5f;
 
@@ -29,19 +27,26 @@ namespace Managers
 
         private void Update()
         {
+            //check if player has touched final door with key
             if (!_hasWon) return;
             _endTimer -= Time.deltaTime;
             
+            //
             if (!(_endTimer <= 0)) return;
             
             _endTimer = 0;
-            Debug.Log("You won!");
+            Debug.Log("Can escape");
+            
+            //opens last door and spawns wingame trigger
             playerWinEvent.RaiseEvent();
+            
+            //reset has won bool
             _hasWon = false;
         }
 
         public void AddKeyToList(Key key)
         {
+            //adds collected key to the list for doors to check
             collectedKeys.Add(key);
         }
         
@@ -63,11 +68,6 @@ namespace Managers
         public void WinGame(bool state)
         {
             _hasWon = state;
-        }
-        
-        public bool HasEnded()
-        {
-            return _hasEnded;
         }
     }
 }

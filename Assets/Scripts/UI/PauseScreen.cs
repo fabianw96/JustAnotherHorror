@@ -8,6 +8,7 @@ namespace UI
     {
         private void OnEnable()
         {
+            //get UIdocument and call methods based on button
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             root.Q<Button>("Return").clicked += () => GameManager.Instance.PauseGame(false);
             root.Q<Button>("Settings").clicked += OpenSettings;
@@ -23,6 +24,7 @@ namespace UI
 
         private void OpenSettings()
         {
+            //switch between current menus
             GameManager.Instance.isExtraMenu = true;
             GameManager.Instance.SwitchMenu();
         }

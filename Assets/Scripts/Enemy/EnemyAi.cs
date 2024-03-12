@@ -12,8 +12,8 @@ namespace Enemy
         [Header("Transforms")]
         private Transform _currentDest;
         private LayerMask _playerLayer;
-        [SerializeField] private GameObject player;
         private Vector3 _playerPosition;
+        [SerializeField] private GameObject player;
         [SerializeField] private List<Transform> waypoints;
         [SerializeField] private Transform lairWaypoint;
         [SerializeField] private Transform finalStandWp;
@@ -37,6 +37,7 @@ namespace Enemy
         [SerializeField] private EnemyAnimation enemyAnimation;
         [SerializeField] private EnemyState enemyState;
         [SerializeField] private NavMeshAgent agent;
+        [SerializeField] private EnemyEvents enemyEvents;
 
         [Header("Animations")] 
         private AnimationEvent _animationEvent;
@@ -52,6 +53,7 @@ namespace Enemy
         {
             //determine layer from layer mask
             _playerLayer = LayerMask.NameToLayer("Player");
+            //init enemy state and set current destination
             enemyState.ChangeState(EState.Patrolling);
             _currentDest = waypoints[Random.Range(0, waypoints.Count)];
         }
@@ -77,16 +79,16 @@ namespace Enemy
         }
         private void ReturnToLairCheck()
         {
-            //enemy runs back to his lair
+            // Check if the enemy needs to return to its lair
             if (enemyState.GetCurrentState() != EState.Lair)
                 return;
             
             if (!(agent.remainingDistance <= 1f)) return;
-            StartCoroutine(StandStill());
+            StartCoroutine(StayIdle());
         }
         private void CheckTameTimer()
         {
-            //time counting down to a forced chase
+            // Check if the enemy needs to start chasing the player based on a timer
             if (_isTimeTicking)
             {
                 tameTimer -= Time.deltaTime;
@@ -112,9 +114,11 @@ namespace Enemy
         }
         private void EnemyChase()
         {
+            // Handle the enemy's chasing behavior
             if (enemyState.GetCurrentState() != EState.Chasing)
                 return;
             
+            //time to next chase not ticking while chasing
             _isTimeTicking = false;
             _dest = player.transform.position;
             agent.destination = _dest;
@@ -124,19 +128,23 @@ namespace Enemy
             //enemy walk to last known player position and waits
             if (player.layer != _playerLayer && !_isPlayerHidden && agent.stoppingDistance <= HiddenStoppingDistance)
             {
-                StartCoroutine(StandStill());
+                StartCoroutine(StayIdle());
             }
-
-            //if player is caught game over
+            
+            
             if (!(distance <= catchDistance) || player.layer != _playerLayer)
                 return;
             
+            //player blackscreen, play sound, warp near "infirmary"
+            enemyEvents.CatchPlayer();
+            agent.Warp(finalStandWp.position);
+            
             enemyState.ChangeState(EState.Patrolling);
-            //player fade to black, sounds, restart & save progress to last key
-            GameplayManager.Instance.GameOver(true);
+
         }
         private void EnemyPatrol()
         {
+            // Handle the enemy's patrolling behavior
             if (enemyState.GetCurrentState() != EState.Patrolling)
                 return;
             
@@ -156,6 +164,7 @@ namespace Enemy
         public void MoveToLair()
         {
             //called when player enters lair
+            //move the enemy back to its lair
             StopAllCoroutines();
             _isTimeTicking = false;
             enemyState.ChangeState(EState.Lair);
@@ -183,19 +192,14 @@ namespace Enemy
 
         private IEnumerator StayIdle()
         {
+            _isPlayerHidden = true;
             _idleTime = Random.Range(minIdleTime, maxIdleTime);
             yield return new WaitForSeconds(_idleTime);
             enemyState.ChangeState(EState.Patrolling);
-            _currentDest = waypoints[Random.Range(0, waypoints.Count)];
-        }
-
-        private IEnumerator StandStill()
-        {
-            _isPlayerHidden = true;
-            yield return new WaitForSeconds(5);
             agent.stoppingDistance = DefaultStoppingDistance;
-            enemyState.ChangeState(EState.Patrolling);
+            _currentDest = waypoints[Random.Range(0, waypoints.Count)];
             _isTimeTicking = true;
         }
+        
     }
 }
